@@ -1,7 +1,7 @@
 
 {
     "name": "oflab1101",
-    "description": "Ubuntu Linux ephemeral environment on x86-64 system with OpenFOAM/ParaView. 
+    "description": "Ubuntu Linux ephemeral environment on x86-64 system with OpenFOAM/ParaView.",
     "author": "Yayworks Inc.",
     "licensed": true,
     "classifications": [
