@@ -5,11 +5,11 @@ RUN apt-get update && apt-get install -y curl
 RUN mkdir -p /usr/local/src
 
 WORKDIR /usr/local/src
-RUN curl -O "http://www.paraview.org/paraview-downloads/download.php?submit=Download&version=v5.41&type=binary&os=linux64&downloadFile=ParaView-5.4.1-Qt5-OpenGL2-MPI-Linux-64bit.tar.gz"
-RUN tar xvf "download.php?submit=Download&version=v5.4.1&type=binary&os=linux64&downloadFile=ParaView-5.4.1-Qt5-OpenGL2-MPI-Linux-64bit.tar.gz"
+RUN curl -O "http://www.paraview.org/paraview-downloads/download.php?submit=Download&version=v5.2&type=binary&os=linux64&downloadFile=ParaView-5.2-Qt4-OpenGL2-MPI-Linux-64bit.tar.gz"
+RUN tar xvf "download.php?submit=Download&version=v5.2&type=binary&os=linux64&downloadFile=ParaView-5.2-Qt4-OpenGL2-MPI-Linux-64bit.tar.gz"
 
-RUN mv /usr/local/src/ParaView-5.4.1-Qt5-OpenGL2-MPI-Linux-64bit /usr/local/ParaView-5.4.1
-RUN rm "/usr/local/src/download.php?submit=Download&version=v5.4.1&type=binary&os=linux64&downloadFile=ParaView-5.4.1-Qt5-OpenGL2-MPI-Linux-64bit.tar.gz"
+RUN mv /usr/local/src/ParaView-5.2-Qt4-OpenGL2-MPI-Linux-64bit /usr/local/ParaView-5.2
+RUN rm "/usr/local/src/download.php?submit=Download&version=v5.2&type=binary&os=linux64&downloadFile=ParaView-5.2-Qt4-OpenGL2-MPI-Linux-64bit.tar.gz"
 
 ADD ./scripts /usr/local/scripts
 
