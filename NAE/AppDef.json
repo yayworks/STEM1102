@@ -6,7 +6,7 @@
     "licensed": true,
     "classifications": [
         "Yaybench/OpenFOAM",
-        "CFD simulations",
+        "CFD simulations"
     ],
     "machines": [
         "np8g*",
