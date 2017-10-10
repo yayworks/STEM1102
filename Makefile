@@ -14,10 +14,10 @@
 # Author: Stephen Fox (stephen.fox@nimbix.net)
 
 image: Dockerfile
-	docker build -t dflab1101 .
+	docker build -t oflab1101 .
 
 tag: image
-	docker tag dflab1101 yayworks/dflab1101:latest && docker tag dflab1101 yayworks/dflab1101:5
+	docker tag oflab1101 yayworks/oflab1101:latest && docker tag oflab1101 yayworks/oflab1101:5
 
 all : tag
-	docker push yayworks/dflab1101:latest && docker push yayworks/dflab1101:5
+	docker push yayworks/oflab1101:latest && docker push yayworks/oflab1101:5
