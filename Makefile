@@ -14,10 +14,10 @@
 # Author: Stephen Fox (stephen.fox@nimbix.net)
 
 image: Dockerfile
-	docker build -t app-paraview .
+	docker build -t dflab1101 .
 
 tag: image
-	docker tag paraview jarvice/app-paraview:latest && docker tag paraview jarvice/app-paraview:5
+	docker tag dflab1101 yayworks/dflab1101:latest && docker tag dflab1101 yayworks/dflab1101:5
 
 all : tag
-	docker push jarvice/app-paraview:latest && docker push jarvice/app-paraview:5
+	docker push yayworks/dflab1101:latest && docker push yayworks/dflab1101:5
