@@ -14,6 +14,8 @@ RUN /usr/local/lib/nimbix_desktop/install-ubuntu-tiger.sh && ln -s /usr/local/li
 # recreate nimbix user home to get the right skeleton files
 RUN /bin/rm -rf /home/nimbix && /sbin/mkhomedir_helper nimbix
 
+
+COPY ./NAE/AppDef.json /etc/NAE/AppDef.json
 # for standalone use
 EXPOSE 5901
 EXPOSE 443
