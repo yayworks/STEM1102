@@ -1,5 +1,5 @@
 
-nimbix/ubuntu-base:trustyFROM
+FROM nimbix/ubuntu-base:trusty
 MAINTAINER Nimbix, Inc.
 
 ENV DEBIAN_FRONTEND noninteractive
