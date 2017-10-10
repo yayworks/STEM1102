@@ -1,7 +1,7 @@
 
 {
   "nae": "paraview.app",
-  "name": "ParaView",
+  "name": "OFLab1101",
   "description": "Run ParaView for data analysis and visualization directly in your browser.",
   "author": "Kitware",
   "licensed": true,
