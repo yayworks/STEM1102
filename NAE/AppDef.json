@@ -10,7 +10,7 @@
       "Simulation/Postprocessing"
   ],
   "machines": [
-    "ng2"
+    "npc*"
   ],
   "scale_max": 1,
   "vault-types": [
