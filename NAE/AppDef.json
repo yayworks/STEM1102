@@ -1,10 +1,10 @@
 {
     "name": "oflab1101",
-    "description": "Ubuntu Linux Desktop Environment",
+    "description": "Ubuntu Linux OpenFOAM Environment",
     "author": "Yayworks Inc.",
     "licensed": true,
     "classifications": [
-        "Yaybench Desktop"
+        "Yaybench OpenFOAM/Paraview"
         
     ],
     "machines": [
