@@ -4,15 +4,23 @@ MAINTAINER stephen.fox@nimbix.net
 
 RUN apt-get update && apt-get install -y curl
 RUN apt-get -y install software-properties-common python-software-properties
+RUN apt-get -y install qt5-default
 
 RUN mkdir -p /usr/local/src
 
 WORKDIR /usr/local/src
-RUN wget https://s3.amazonaws.com/yb-lab-cfg/ParaView-5.1.2-Qt4-OpenGL2-MPI-Linux-64bit.tar.gz
-RUN tar xvf "ParaView-5.1.2-Qt4-OpenGL2-MPI-Linux-64bit.tar.gz"
 
-RUN mv /usr/local/src/ParaView-5.1.2-Qt4-OpenGL2-MPI-Linux-64bit /usr/local/ParaView-5.1.2
-RUN rm "/usr/local/src/ParaView-5.1.2-Qt4-OpenGL2-MPI-Linux-64bit.tar.gz"
+#RUN wget https://s3.amazonaws.com/yb-lab-cfg/ParaView-5.1.2-Qt4-OpenGL2-MPI-Linux-64bit.tar.gz
+#RUN tar xvf "ParaView-5.1.2-Qt4-OpenGL2-MPI-Linux-64bit.tar.gz"
+
+#RUN mv /usr/local/src/ParaView-5.1.2-Qt4-OpenGL2-MPI-Linux-64bit /usr/local/ParaView-5.1.2
+#RUN rm "/usr/local/src/ParaView-5.1.2-Qt4-OpenGL2-MPI-Linux-64bit.tar.gz"
+
+RUN wget https://s3.amazonaws.com/yb-lab-cfg/ParaView-5.4.1-Qt5-OpenGL2-MPI-Linux-64bit.tar.gz
+RUN tar xvf "ParaView-5.4.1-Qt5-OpenGL2-MPI-Linux-64bit.tar.gz"
+
+RUN mv /usr/local/src/ParaView-5.4.1-Qt5-OpenGL2-MPI-Linux-64bit /usr/local/ParaView-5.4.1
+RUN rm /usr/local/src/ParaView-5.4.1-Qt5-OpenGL2-MPI-Linux-64bit.tar.gz
 
 ADD ./scripts /usr/local/scripts
 
