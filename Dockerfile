@@ -5,10 +5,6 @@ MAINTAINER stephen.fox@nimbix.net
 RUN apt-get update && apt-get install -y curl
 RUN apt-get install software-properties-common python-software-properties
 
-ADD ./scripts /usr/local/scripts
-
-CMD /usr/local/scripts/update_drivers.sh
-
 RUN mkdir -p /usr/local/src
 
 WORKDIR /usr/local/src
@@ -18,6 +14,7 @@ RUN tar xvf "ParaView-5.1.2-Qt4-OpenGL2-MPI-Linux-64bit.tar.gz"
 RUN mv /usr/local/src/ParaView-5.1.2-Qt4-OpenGL2-MPI-Linux-64bit /usr/local/ParaView-5.1.2
 RUN rm "/usr/local/src/ParaView-5.1.2-Qt4-OpenGL2-MPI-Linux-64bit.tar.gz"
 
+ADD ./scripts /usr/local/scripts
 
 # Add PushToCompute Work Flow Metadata
 #ADD ./NAE/nvidia.cfg /etc/NAE/nvidia.cfg
@@ -26,3 +23,4 @@ ADD ./NAE/AppDef.json /etc/NAE/AppDef.json
 #COPY ./NAE/screenshot.png /etc/NAE/screenshot.png
 
 CMD /usr/local/scripts/start.sh
+CMD /usr/local/scripts/update_drivers.sh
