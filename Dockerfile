@@ -11,6 +11,8 @@ RUN sh -c "wget -O - http://dl.openfoam.org/gpg.key | apt-key add -"
 RUN apt-get update
 RUN apt-get -y install openfoam5
 
+RUN echo 'source /opt/openfoam5/etc/bashrc' >> /etc/skel/.bashrc
+
 #RUN mkdir -p /usr/local/src
 
 #WORKDIR /usr/local/src
