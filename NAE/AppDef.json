@@ -21,11 +21,10 @@
     ],
     "commands": {
         "gui": {
-            "path": "/usr/local/bin/nimbix_desktop openscad",
+            "path": "/usr/local/scripts/start.sh",
             "interactive": true,
-            "name": "OpenSCAD",
-            "description": "Run OpenSCAD directly in your browser.",
-            "parameters": {}
+            "name": "Paraview",
+            "description": "Run Paraview directly in your browser."
         }
     },
     "image": {
