@@ -23,7 +23,16 @@
             "interactive": true,
             "name": "Paraview",
             "description": "Run Paraview directly in your browser."
+        },
+        "Server": {
+            "path": "/sbin/init",
+            "interactive": true,
+            "name": "Server",
+            "description": "Launch a session with all boot services, including SSH.  Connection address and credentials will appear in your web browser once available.",
+            "parameters": {}
         }
+    },
+        
     },
     "image": {
         "type": "image/jpeg",
