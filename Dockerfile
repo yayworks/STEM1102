@@ -3,7 +3,7 @@ FROM nimbix/ubuntu-desktop:trusty
 MAINTAINER stephen.fox@nimbix.net
 
 RUN apt-get update && apt-get install -y curl
-RUN apt-get install software-properties-common python-software-properties
+RUN apt-get -y install software-properties-common python-software-properties
 
 RUN mkdir -p /usr/local/src
 
