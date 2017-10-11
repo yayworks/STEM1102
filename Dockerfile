@@ -2,7 +2,7 @@
 FROM nimbix/ubuntu-desktop:trusty
 MAINTAINER stephen.fox@nimbix.net
 
-RUN apt-get update && apt-get install -y curl
+RUN apt-get update && apt-get install -y curl && apt-get install -y make && apt-get install -y gfortran
 RUN apt-get -y install software-properties-common python-software-properties
 #RUN apt-get -y install qt5-default
 
