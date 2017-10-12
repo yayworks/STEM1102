@@ -2,15 +2,18 @@
 FROM nimbix/ubuntu-desktop:trusty
 MAINTAINER stephen.fox@nimbix.net
 
-RUN apt-get update && apt-get install -y curl && apt-get install -y make && apt-get install -y gfortran
-RUN apt-get -y install software-properties-common python-software-properties
+RUN apt-get update && \
+    apt-get install -y curl && \
+    apt-get install -y make && \ 
+    apt-get install -y gfortran && \
+    apt-get -y install software-properties-common python-software-properties
 #RUN apt-get -y install qt5-default
 
 RUN add-apt-repository http://dl.openfoam.org/ubuntu
 RUN sh -c "wget -O - http://dl.openfoam.org/gpg.key | apt-key add -"
-RUN apt-get update
-RUN apt-get -y install apt-transport-https
-RUN apt-get -y install openfoam5
+RUN apt-get update && \
+    apt-get -y install apt-transport-https && \
+    apt-get -y install openfoam5
 
 RUN echo 'source /opt/openfoam5/etc/bashrc' >> /etc/skel/.bashrc
 
