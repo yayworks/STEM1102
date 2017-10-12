@@ -8,8 +8,9 @@
         
     ],
     "machines": [
-        "ng5",
-        "n0"
+        "ng*",
+        "nc*",
+        "n*"
     ],
     "scale_max": 1,
     "vault-types": [
