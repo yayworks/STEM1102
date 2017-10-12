@@ -19,6 +19,12 @@
         "OBJECT"
     ],
     "commands": {
+        "gui": {
+            "path": "/usr/local/scripts/start.sh",
+            "interactive": true,
+            "name": "ParaView",
+            "description": "Run a ParaView directly in your browser."
+        },
         "Server": {
             "path": "/sbin/init",
             "interactive": true,
