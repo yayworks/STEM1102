@@ -13,9 +13,9 @@ RUN add-apt-repository http://dl.openfoam.org/ubuntu
 RUN sh -c "wget -O - http://dl.openfoam.org/gpg.key | apt-key add -"
 RUN apt-get update && \
     apt-get -y install apt-transport-https && \
-    apt-get -y install openfoam5
+    apt-get -y install openfoam4
 
-RUN echo 'source /opt/openfoam5/etc/bashrc' >> /etc/skel/.bashrc
+RUN echo 'source /opt/openfoam4/etc/bashrc' >> /etc/skel/.bashrc
 
 #RUN mkdir -p /usr/local/src
 
