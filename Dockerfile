@@ -17,6 +17,13 @@ RUN apt-get update && \
 
 RUN echo 'source /opt/openfoam4/etc/bashrc' >> /etc/skel/.bashrc
 
+WORKDIR /home/nimbix
+RUN /usr/bin/wget https://s3.amazonaws.com/yb-lab-cfg/admin/yb-admin.NIMBIX.x86_64.tar \
+&& tar xvf yb-admin.NIMBIX.x86_64.tar -C /usr/bin \
+&& sudo apt-get install -y tcl \
+&& sudo apt-get install -y git 
+    
+
 
 ADD ./scripts /usr/local/scripts
 
