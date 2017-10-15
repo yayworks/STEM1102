@@ -6,8 +6,12 @@ RUN apt-get update && \
     apt-get install -y curl && \
     apt-get install -y make && \ 
     apt-get install -y gfortran && \
-    apt-get -y install software-properties-common python-software-properties
-
+    apt-get -y install software-properties-common python-software-properties && \
+    
+    wget -O- -q http://s3tools.org/repo/deb-all/stable/s3tools.key | sudo apt-key add - && \
+    sudo wget -O/etc/apt/sources.list.d/s3tools.list http://s3tools.org/repo/deb-all/stable/s3tools.list && \
+    sudo apt-get update && \
+    sudo apt-get install s3cmd
 
 RUN add-apt-repository http://dl.openfoam.org/ubuntu
 RUN sh -c "wget -O - http://dl.openfoam.org/gpg.key | apt-key add -"
