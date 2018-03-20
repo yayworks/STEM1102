@@ -13,20 +13,20 @@ RUN apt-get update && \
     sudo apt-get update && \
     sudo apt-get install s3cmd
 
-RUN add-apt-repository http://dl.openfoam.org/ubuntu
-RUN sh -c "wget -O - http://dl.openfoam.org/gpg.key | apt-key add -"
-RUN apt-get update && \
-    apt-get -y install apt-transport-https && \
-    apt-get -y install openfoam4
+##RUN add-apt-repository http://dl.openfoam.org/ubuntu
+##RUN sh -c "wget -O - http://dl.openfoam.org/gpg.key | apt-key add -"
+##RUN apt-get update && \
+    ##apt-get -y install apt-transport-https && \
+    ##apt-get -y install openfoam4
 
-RUN echo 'source /opt/openfoam4/etc/bashrc' >> /etc/skel/.bashrc
+##RUN echo 'source /opt/openfoam4/etc/bashrc' >> /etc/skel/.bashrc
 
 WORKDIR /home/nimbix
 RUN /usr/bin/wget https://s3.amazonaws.com/yb-lab-cfg/admin/yb-admin.NIMBIX.x86_64.tar \
 && tar xvf yb-admin.NIMBIX.x86_64.tar -C /usr/bin \
 && sudo apt-get install -y tcl \
 && sudo apt-get install -y git \
-&& sudo apt-get install ocatve
+&& sudo apt-get install octave
     
 
 
