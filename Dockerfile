@@ -22,7 +22,7 @@ RUN /usr/bin/wget https://s3.amazonaws.com/yb-lab-cfg/admin/yb-admin.NIMBIX.x86_
 && apt-add-repository ppa:octave/stable \
 && apt-get update \
 && apt-get install -y octave \
-&& apt-get build-dep octave
+&& apt-get build-dep -y octave
 
 
 ADD ./scripts /usr/local/scripts
