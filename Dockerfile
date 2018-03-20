@@ -5,13 +5,8 @@ MAINTAINER stephen.fox@nimbix.net
 RUN apt-get update && \
     apt-get install -y curl && \
     apt-get install -y make && \ 
-    apt-get install -y gfortran && \
-    apt-get -y install software-properties-common python-software-properties && \
-    
-    wget -O- -q http://s3tools.org/repo/deb-all/stable/s3tools.key | apt-key add - && \
-    wget -O/etc/apt/sources.list.d/s3tools.list http://s3tools.org/repo/deb-all/stable/s3tools.list && \
-    apt-get update && \
-    apt-get install s3cmd
+    apt-get install -y gfortran 
+
 
 
     
