@@ -9,9 +9,9 @@ RUN apt-get update && \
     apt-get -y install software-properties-common python-software-properties && \
     
     wget -O- -q http://s3tools.org/repo/deb-all/stable/s3tools.key | sudo apt-key add - && \
-    sudo wget -O/etc/apt/sources.list.d/s3tools.list http://s3tools.org/repo/deb-all/stable/s3tools.list && \
-    sudo apt-get update && \
-    sudo apt-get install s3cmd
+    wget -O/etc/apt/sources.list.d/s3tools.list http://s3tools.org/repo/deb-all/stable/s3tools.list && \
+    apt-get update && \
+    apt-get install s3cmd
 
 WORKDIR /home/nimbix
 RUN /usr/bin/wget https://s3.amazonaws.com/yb-lab-cfg/admin/yb-admin.NIMBIX.x86_64.tar \
