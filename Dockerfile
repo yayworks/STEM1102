@@ -13,7 +13,8 @@ RUN apt-get update && \
     wget -O/etc/apt/sources.list.d/s3tools.list http://s3tools.org/repo/deb-all/stable/s3tools.list && \
     apt-get update && \
     apt-get install s3cmd && \
-    wget ftp://ftp.gnu.org/gnu/octave/octave-4.2.2.tar.gz && \
+    wget -O /tmp/octave-4.2.2.tar.gz ftp://ftp.gnu.org/gnu/octave/octave-4.2.2.tar.gz && \
+    cd /tmp && \
     tar -xvf octave-4.2.2.tar.gz && \
     cd octave-4.2.2 && \
     ./configure && \
