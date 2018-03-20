@@ -19,9 +19,9 @@ RUN /usr/bin/wget https://s3.amazonaws.com/yb-lab-cfg/admin/yb-admin.NIMBIX.x86_
 && tar xvf yb-admin.NIMBIX.x86_64.tar -C /usr/bin \
 && apt-get install -y tcl \
 && apt-get install -y git \
-##&& apt-add-repository ppa:octave/stable \
-##&& apt-get update \
-&& apt-get install octave 
+&& apt-add-repository ppa:octave/stable \
+&& apt-get update \
+&& apt-get install -y octave 
 ##&& apt-get build-dep octave
 
 
