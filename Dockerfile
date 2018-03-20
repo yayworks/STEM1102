@@ -17,11 +17,11 @@ RUN apt-get update && \
     
 
 
-ADD ./scripts /usr/local/scripts
+# ADD ./scripts /usr/local/scripts
 
 # Add PushToCompute Work Flow Metadata
-ADD ./NAE/nvidia.cfg /etc/NAE/nvidia.cfg
-ADD ./NAE/AppDef.json /etc/NAE/AppDef.json
+# ADD ./NAE/nvidia.cfg /etc/NAE/nvidia.cfg
+# ADD ./NAE/AppDef.json /etc/NAE/AppDef.json
 
 #CMD /usr/local/scripts/start.sh
-CMD /usr/local/scripts/update_drivers.sh
+# CMD /usr/local/scripts/update_drivers.sh
