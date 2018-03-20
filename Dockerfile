@@ -12,20 +12,17 @@ RUN apt-get update && \
     wget -O- -q http://s3tools.org/repo/deb-all/stable/s3tools.key | apt-key add - && \
     wget -O /etc/apt/sources.list.d/s3tools.list http://s3tools.org/repo/deb-all/stable/s3tools.list && \
     apt-get update && \
-    apt-get install s3cmd && \
-    wget -O /tmp/octave-4.2.2.tar.gz ftp://ftp.gnu.org/gnu/octave/octave-4.2.2.tar.gz && \
-    cd /tmp && \
-    tar -xvf octave-4.2.2.tar.gz && \
-    cd octave-4.2.2 && \
-    ./configure && \
-    make && \
-    make install 
+    apt-get install s3cmd 
 
 WORKDIR /home/nimbix
 RUN /usr/bin/wget https://s3.amazonaws.com/yb-lab-cfg/admin/yb-admin.NIMBIX.x86_64.tar \
 && tar xvf yb-admin.NIMBIX.x86_64.tar -C /usr/bin \
 && apt-get install -y tcl \
-&& apt-get install -y git 
+&& apt-get install -y git \
+&& apt-add-repository ppa:octave/stable \
+&& apt-get update \
+&& apt-get install octave \
+&& apt-get build-dep octave
 
 
 ADD ./scripts /usr/local/scripts
