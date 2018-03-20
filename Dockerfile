@@ -17,9 +17,9 @@ RUN apt-get update && \
 WORKDIR /home/nimbix
 RUN /usr/bin/wget https://s3.amazonaws.com/yb-lab-cfg/admin/yb-admin.NIMBIX.x86_64.tar \
 && tar xvf yb-admin.NIMBIX.x86_64.tar -C /usr/bin \
-&& sudo apt-get install -y tcl \
-&& sudo apt-get install -y git \
-&& sudo apt-get install octave
+&& apt-get install -y tcl \
+&& apt-get install -y git \
+&& apt-get install octave
 
 ADD ./scripts /usr/local/scripts
 
