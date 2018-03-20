@@ -22,7 +22,15 @@ RUN /usr/bin/wget https://s3.amazonaws.com/yb-lab-cfg/admin/yb-admin.NIMBIX.x86_
 && apt-add-repository ppa:octave/stable \
 && apt-get update \
 && apt-get install -y octave \
-&& apt-get build-dep -y octave
+&& apt-get build-dep -y octave \
+
+&& rm -rf /home/nimbix/Downloads \
+&& rm -rf /home/nimbix/Desktop \
+&& rm -rf /home/nimbix/Documents \
+&& rm -rf /home/nimbix/Music \
+&& rm -rf /home/nimbix/Photos \
+&& rm -rf /home/nimbix/Videos \
+&& rm -rf /home/nimbix/data
 
 
 ADD ./scripts /usr/local/scripts
