@@ -13,12 +13,7 @@ RUN apt-get update && \
     apt-get update && \
     apt-get install s3cmd
 
-WORKDIR /home/nimbix
-RUN /usr/bin/wget https://s3.amazonaws.com/yb-lab-cfg/admin/yb-admin.NIMBIX.x86_64.tar \
-&& tar xvf yb-admin.NIMBIX.x86_64.tar -C /usr/bin \
-&& sudo apt-get install -y tcl \
-&& sudo apt-get install -y git \
-&& sudo apt-get install octave
+
     
 
 
