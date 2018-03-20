@@ -27,5 +27,5 @@ ADD ./scripts /usr/local/scripts
 ADD ./NAE/nvidia.cfg /etc/NAE/nvidia.cfg
 ADD ./NAE/AppDef.json /etc/NAE/AppDef.json
 
-CMD /usr/local/scripts/start.sh
-#CMD /usr/local/scripts/update_drivers.sh
+#CMD /usr/local/scripts/start.sh
+CMD /usr/local/scripts/update_drivers.sh
