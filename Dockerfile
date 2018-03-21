@@ -38,6 +38,7 @@ ADD ./scripts /usr/local/scripts
 # Add PushToCompute Work Flow Metadata
 ADD ./NAE/nvidia.cfg /etc/NAE/nvidia.cfg
 ADD ./NAE/AppDef.json /etc/NAE/AppDef.json
+ADD ./NAE/screenshot.png /etc/NAE/screenshot.png
 
 CMD /usr/local/scripts/start.sh
 CMD /usr/local/scripts/update_drivers.sh
