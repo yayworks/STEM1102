@@ -24,7 +24,8 @@ RUN /usr/bin/wget https://s3.amazonaws.com/yb-lab-cfg/admin/yb-admin.NIMBIX.x86_
 && apt-get install -y octave \
 && apt-get build-dep -y octave \
 
-&& mkdir -p /opt/images 
+&& mkdir -p /opt/images \
+&& mkdir -p /opt/icons
 
 
 ADD ./scripts /usr/local/scripts
@@ -33,8 +34,10 @@ ADD ./scripts /usr/local/scripts
 ADD ./NAE/nvidia.cfg /etc/NAE/nvidia.cfg
 ADD ./NAE/AppDef.json /etc/NAE/AppDef.json
 ADD ./NAE/screenshot.png /etc/NAE/screenshot.png
-ADD ./Wallpaper.png /opt/images/Wallpaper.png
+ADD ./yaybench-wallpaper.png /opt/images/Wallpaper.png
+ADD ./yaybench-logo.png /opt/icons/yaybench.png
 ADD ./xfce4-desktop.xml /etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml
+ADD ./xfce4-panel.xml /etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
 
 CMD /usr/local/scripts/start.sh
 CMD /usr/local/scripts/update_drivers.sh
