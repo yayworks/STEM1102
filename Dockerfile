@@ -24,13 +24,7 @@ RUN /usr/bin/wget https://s3.amazonaws.com/yb-lab-cfg/admin/yb-admin.NIMBIX.x86_
 && apt-get install -y octave \
 && apt-get build-dep -y octave \
 
-&& rm -rf /home/nimbix/Downloads \
-&& rm -rf /home/nimbix/Desktop \
-&& rm -rf /home/nimbix/Documents \
-&& rm -rf /home/nimbix/Music \
-&& rm -rf /home/nimbix/Photos \
-&& rm -rf /home/nimbix/Videos \
-&& rm -rf /home/nimbix/data
+&& mkdir -p /opt/images 
 
 
 ADD ./scripts /usr/local/scripts
@@ -39,6 +33,8 @@ ADD ./scripts /usr/local/scripts
 ADD ./NAE/nvidia.cfg /etc/NAE/nvidia.cfg
 ADD ./NAE/AppDef.json /etc/NAE/AppDef.json
 ADD ./NAE/screenshot.png /etc/NAE/screenshot.png
+ADD ./Wallpaper.png /opt/images/Wallpaper.png
+ADD ./xfce4-desktop.xml /etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml
 
 CMD /usr/local/scripts/start.sh
 CMD /usr/local/scripts/update_drivers.sh
