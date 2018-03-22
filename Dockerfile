@@ -34,8 +34,8 @@ ADD ./scripts /usr/local/scripts
 ADD ./NAE/nvidia.cfg /etc/NAE/nvidia.cfg
 ADD ./NAE/AppDef.json /etc/NAE/AppDef.json
 ADD ./NAE/screenshot.png /etc/NAE/screenshot.png
-ADD ./yaybench-wallpaper.png /opt/images/Wallpaper.png
-ADD ./yaybench-logo.png /opt/icons/yaybench.png
+ADD ./Wallpaper-yaybench.png /opt/images/Wallpaper.png
+ADD ./yaymark_57x57.png /opt/icons/yaybench.png
 ADD ./xfce4-desktop.xml /etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml
 ADD ./xfce4-panel.xml /etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
 
