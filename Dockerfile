@@ -32,10 +32,10 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN wget -O- -q http://s3tools.org/repo/deb-all/stable/s3tools.key | apt-key add - && \
-    wget -O/etc/apt/sources.list.d/s3tools.list http://s3tools.org/repo/deb-all/stable/s3tools.list && \
-    apt-get update && \
-    apt-get install s3cmd 
+RUN wget -O- -q http://s3tools.org/repo/deb-all/stable/s3tools.key | apt-key add - 
+RUN wget -O/etc/apt/sources.list.d/s3tools.list http://s3tools.org/repo/deb-all/stable/s3tools.list 
+RUN apt-get update 
+RUN apt-get install -y s3cmd 
 
 WORKDIR /home/nimbix
 RUN /usr/bin/wget https://s3.amazonaws.com/yb-lab-cfg/admin/yb-admin.NIMBIX.x86_64.tar  && \
