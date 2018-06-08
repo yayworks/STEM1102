@@ -22,7 +22,19 @@ RUN /usr/bin/wget https://s3.amazonaws.com/yb-lab-cfg/admin/yb-admin.NIMBIX.x86_
 && apt-add-repository ppa:octave/stable \
 && apt-get update \
 && apt-get install -y octave \
-&& apt-get build-dep -y octave \
+&& apt-get build-dep -y octave 
+
+
+RUN sudo apt-get install -y r-base && \
+    sudo apt-get install -y r-base-dev && \
+    sudo apt-get install -y gdebi-core 
+RUN /usr/bin/wget https://download2.rstudio.org/rstudio-server-1.1.442-amd64.deb && \
+    echo "y" |sudo gdebi rstudio-server-1.1.442-amd64.deb && \
+    echo "auth-minimum-user-id=500" >> /etc/rstudio/rserver.conf && \
+    rm rstudio-server-1.1.442-amd64.deb 
+    
+RUN sudo apt-get update && \
+    sudo apt-get install -y scilab 
 
 && mkdir -p /opt/images \
 && mkdir -p /opt/icons
