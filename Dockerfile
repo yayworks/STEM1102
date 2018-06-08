@@ -24,7 +24,7 @@ RUN apt-get update && \
     libibumad3 \
     flex \
     gfortran && \
-    apt-get install -y python3.6 && \
+    apt-get install -y python3.4 && \
     apt-get install -y python3-pip && \
     apt-get install -y python-qt4 && \ 
     apt-get install -y nodejs-legacy && \
