@@ -1,5 +1,5 @@
 
-FROM nimbix/ubuntu-desktop:xenial
+FROM nimbix/app-cuda-ubuntu
 MAINTAINER Nimbix, Inc.
 
 RUN apt-get update && \
