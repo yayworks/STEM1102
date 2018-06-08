@@ -1,6 +1,6 @@
 
-FROM nimbix/ubuntu-desktop:trusty
-MAINTAINER stephen.fox@nimbix.net
+FROM nimbix/ubuntu-desktop:xenial
+MAINTAINER Nimbix, Inc.
 
 RUN apt-get update && \
     apt-get install -y curl && \
