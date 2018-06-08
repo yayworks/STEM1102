@@ -36,8 +36,8 @@ RUN /usr/bin/wget https://download2.rstudio.org/rstudio-server-1.1.442-amd64.deb
 RUN sudo apt-get update && \
     sudo apt-get install -y scilab 
 
-&& mkdir -p /opt/images \
-&& mkdir -p /opt/icons
+RUN mkdir -p /opt/images && \
+    mkdir -p /opt/icons
 
 
 ADD ./scripts /usr/local/scripts
