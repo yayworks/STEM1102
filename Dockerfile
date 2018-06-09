@@ -56,24 +56,58 @@ RUN wget -O/etc/apt/sources.list.d/s3tools.list http://s3tools.org/repo/deb-all/
 RUN apt-get update 
 RUN apt-get install -y s3cmd 
 
-WORKDIR /home/nimbix
-RUN /usr/bin/wget https://s3.amazonaws.com/yb-lab-cfg/admin/yb-admin.NIMBIX.x86_64.tar  && \
-    tar xvf yb-admin.NIMBIX.x86_64.tar -C /usr/bin && \
-    apt-add-repository ppa:octave/stable && \
-    apt-get update && \
-    apt-get install -y octave && \
-    apt-get build-dep -y octave 
+ENV MPI_VERSION 2.0.1
+ADD ./install-ompi.sh /tmp/install-ompi.sh
+RUN /bin/bash -x /tmp/install-ompi.sh && \
+    rm -rf /tmp/install-ompi.sh
 
+ENV OSU_VERSION 5.3.2
+ADD ./install-osu.sh /tmp/install-osu.sh
+RUN /bin/bash -x /tmp/install-osu.sh && rm -rf /tmp/install-osu.sh
+
+ADD ./yb-sw-config.NIMBIX.x8664.turbotensor.sh /tmp/yb-sw-config.NIMBIX.x8664.turbotensor.sh
+RUN /bin/bash -x /tmp/yb-sw-config.NIMBIX.x8664.turbotensor.sh 
+
+WORKDIR /home/nimbix
+RUN /usr/bin/wget https://s3.amazonaws.com/yb-lab-cfg/admin/yb-admin.NIMBIX.x86_64.tar && \
+    tar xvf yb-admin.NIMBIX.x86_64.tar -C /usr/bin 
+
+ADD ./jupyterhub_config.py /usr/local
+ADD ./wetty.tar.gz /usr/local
+ADD ./config.sh /usr/local/config.sh
+ADD ./start.sh /usr/local/start.sh
+ADD ./setup.x /usr/local/setup.x
+ADD ./jpy_lab_start.sh /usr/local/jpy_lab_start.sh
+RUN chmod +x /usr/local/config.sh && chown nimbix.nimbix /usr/local/config.sh && \
+    chmod +x /usr/local/start.sh && chown nimbix.nimbix /usr/local/start.sh && \
+    chmod +x /usr/local/setup.x && chown nimbix.nimbix /usr/local/setup.x && \
+    chmod +x /usr/local/jpy_lab_start.sh 
+ 
+    
 RUN sudo apt-get install -y r-base && \
     sudo apt-get install -y r-base-dev && \
     sudo apt-get install -y gdebi-core 
 RUN /usr/bin/wget https://download2.rstudio.org/rstudio-server-1.1.442-amd64.deb && \
     echo "y" |sudo gdebi rstudio-server-1.1.442-amd64.deb && \
     echo "auth-minimum-user-id=500" >> /etc/rstudio/rserver.conf && \
+    echo "Y" | /usr/local/anaconda3/bin/conda install -c r r-irkernel && \
     rm rstudio-server-1.1.442-amd64.deb 
+
+RUN echo " " | sudo apt-add-repository ppa:octave/stable && \
+    sudo apt-get update && \
+    sudo apt-get install -y octave && \
+    sudo apt-get build-dep -y octave && \
+    echo "Y" | /usr/local/anaconda3/bin/conda install -c conda-forge octave_kernel
     
 RUN sudo apt-get update && \
-    sudo apt-get install -y scilab 
+    sudo apt-get install -y scilab && \
+    sudo /usr/local/anaconda3/bin/pip install msgpack && \
+    sudo /usr/local/anaconda3/bin/pip install scilab_kernel
+    
+RUN sudo /usr/local/anaconda3/bin/pip install jupyter_c_kernel && \
+    sudo /usr/local/anaconda3/bin/install_c_kernel
+
+
 
 RUN mkdir -p /opt/images && \
     mkdir -p /opt/icons
@@ -102,4 +136,6 @@ EXPOSE 22
 # for standalone use
 EXPOSE 5901
 EXPOSE 443
+
+
 
