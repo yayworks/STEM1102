@@ -1,6 +1,25 @@
 
-FROM nimbix/app-cuda-ubuntu
-MAINTAINER Nimbix, Inc.
+FROM nvidia/cuda:9.1-cudnn7-devel-ubuntu16.04
+LABEL maintainer="Nimbix, Inc."
+
+# Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
+ARG SERIAL_NUMBER
+ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180608.2028}
+
+ARG GIT_BRANCH
+ENV GIT_BRANCH ${GIT_BRANCH:-master}
+
+RUN apt-get -y update && \
+    apt-get -y install curl && \
+    curl -H 'Cache-Control: no-cache' \
+        https://raw.githubusercontent.com/nimbix/image-common/master/install-nimbix.sh \
+        | bash -s -- --setup-nimbix-desktop --image-common-branch $GIT_BRANCH
+
+# Install CUDA samples
+RUN apt-get -y install cuda-samples-9-1 && apt-get clean
+
+# Fix VirtualGL for sudo
+RUN chmod u+s /usr/lib/libdlfaker.so /usr/lib/libvglfaker.so
 
 RUN apt-get update && \
     apt-get -y install software-properties-common python-software-properties && \
@@ -64,7 +83,10 @@ ADD ./scripts /usr/local/scripts
 
 # Add PushToCompute Work Flow Metadata
 ADD ./NAE/nvidia.cfg /etc/NAE/nvidia.cfg
-ADD ./NAE/AppDef.json /etc/NAE/AppDef.json
+# Metadata
+COPY NAE/AppDef.json /etc/NAE/AppDef.json
+RUN curl --fail -X POST -d @/etc/NAE/AppDef.json https://api.jarvice.com/jarvice/validate
+
 ADD ./NAE/screenshot.png /etc/NAE/screenshot.png
 ADD ./Wallpaper-yaybench_1280x720.png /opt/images/Wallpaper.png
 ADD ./yaymark_57x57.png /opt/icons/yaybench.png
@@ -73,3 +95,11 @@ ADD ./xfce4-panel.xml /etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-p
 
 CMD /usr/local/scripts/start.sh
 CMD /usr/local/scripts/update_drivers.sh
+
+# Expose port 22 for local JARVICE emulation in docker
+EXPOSE 22
+
+# for standalone use
+EXPOSE 5901
+EXPOSE 443
+
