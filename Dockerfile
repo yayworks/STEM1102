@@ -3,8 +3,8 @@ FROM nvidia/cuda:9.1-cudnn7-devel-ubuntu16.04
 LABEL maintainer="Nimbix, Inc."
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
-ARG SERIAL_NUMBER
-ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180608.2224}
+#ARG SERIAL_NUMBER
+#ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180608.2224}
 
 ARG GIT_BRANCH
 ENV GIT_BRANCH ${GIT_BRANCH:-master}
@@ -112,6 +112,9 @@ RUN sudo /usr/local/anaconda3/bin/pip install jupyter_c_kernel && \
 RUN mkdir -p /opt/images && \
     mkdir -p /opt/icons
 
+# Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
+ARG SERIAL_NUMBER
+ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180612.1017}
 
 ADD ./scripts /usr/local/scripts
 
