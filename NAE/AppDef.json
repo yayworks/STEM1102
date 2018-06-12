@@ -25,6 +25,13 @@
             "name": "Ocatve",
             "description": "Run GNU Octave"
         },
+         "Desktop": {
+            "path": "/sbin/init;/usr/local/scripts/start.sh",
+            "interactive": true,
+            "name": "Desktop",
+            "description": "Launch a session with all boot services, including SSH.  Connection address and credentials will appear in your web browser once available.",
+            "parameters": {}
+        },
         "Server": {
             "path": "/sbin/init",
             "interactive": true,
