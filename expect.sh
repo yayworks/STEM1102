@@ -1,7 +1,7 @@
 
 #!/usr/bin/expect
 
-spawn sudo /home/nimbix/install
+spawn sudo /home/nimbix/install_comp.sh
 expect "Press "
 send "\n"
 expect "NVIDIA "
