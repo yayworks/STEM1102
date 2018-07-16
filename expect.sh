@@ -1,4 +1,3 @@
-
 #!/usr/bin/expect
 
 spawn sudo /usr/local/install
