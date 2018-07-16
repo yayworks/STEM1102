@@ -130,11 +130,11 @@ ADD ./xfce4-panel.xml /etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-p
 CMD /usr/local/scripts/start.sh
 CMD /usr/local/scripts/update_drivers.sh
 
-ADD ./install_comp.sh /home/nimbix/install_comp.sh
-ADD ./expect.sh       /home/nimbix/expect.sh
-RUN  chmod +x         /home/nimbix/install_comp.sh
-RUN  chmod +x         /home/nimbix/expect.sh
-CMD                   /home/nimbix/install_comp.sh
+ADD ./install_comp.sh /usr/local/install_comp.sh
+ADD ./expect.sh       /usr/local/expect.sh
+RUN  chmod +x         /usr/local/install_comp.sh
+RUN  chmod +x         /usr/local/expect.sh
+CMD                   /usr/local/install_comp.sh
 
 RUN echo 'export PATH=/usr/local/cuda/bin:/usr/local/anaconda3/envs/tensorflow/bin:$PATH' >> /home/nimbix/.bashrc \
 &&  echo 'export PYTHONPATH=/usr/local/anaconda3/envs/tensorflow/lib/python3.6:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/prettytensor-0.7.2-py3.6.egg:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/enum34-1.1.6-py3.6.egg:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/matplotlib:$PYTHONPATH' >> /home/nimbix/.bashrc \
