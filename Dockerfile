@@ -3,7 +3,33 @@ LABEL maintainer "Raj Panda <raj@yayworks.com>"
 
 # Install requirements (gcc & g++)
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        gcc g++ && \
+    software-properties-common python-software-properties \
+    build-essential \
+    awscli \
+    expect \
+    curl \
+    git \
+    make \
+    tcl \
+    wget \
+    libibverbs-dev \
+    libibverbs1 \
+    librdmacm1 \
+    librdmacm-dev \
+    rdmacm-utils \
+    libibmad-dev \
+    libibmad5 \
+    byacc \
+    libibumad-dev \
+    libibumad3 \
+    flex \
+    gfortran && \
+    apt-get install -y python3.4 && \
+    apt-get install -y python3-pip && \
+    apt-get install -y python-qt4 && \ 
+    apt-get install -y nodejs-legacy && \
+    apt-get install -y npm && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 # Install PGI
@@ -66,36 +92,7 @@ RUN apt-get -y install cuda-samples-9-1 && apt-get clean
 # Fix VirtualGL for sudo
 RUN chmod u+s /usr/lib/libdlfaker.so /usr/lib/libvglfaker.so
 
-RUN apt-get update && \
-    apt-get -y install software-properties-common python-software-properties && \
-    apt-get install -y \
-    build-essential \
-    awscli \
-    expect \
-    curl \
-    git \
-    make \
-    tcl \
-    wget \
-    libibverbs-dev \
-    libibverbs1 \
-    librdmacm1 \
-    librdmacm-dev \
-    rdmacm-utils \
-    libibmad-dev \
-    libibmad5 \
-    byacc \
-    libibumad-dev \
-    libibumad3 \
-    flex \
-    gfortran && \
-    apt-get install -y python3.4 && \
-    apt-get install -y python3-pip && \
-    apt-get install -y python-qt4 && \ 
-    apt-get install -y nodejs-legacy && \
-    apt-get install -y npm && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+
 
 RUN wget -O- -q http://s3tools.org/repo/deb-all/stable/s3tools.key | apt-key add - 
 RUN wget -O/etc/apt/sources.list.d/s3tools.list http://s3tools.org/repo/deb-all/stable/s3tools.list 
