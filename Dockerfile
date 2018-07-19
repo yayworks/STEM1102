@@ -40,8 +40,9 @@ ENV PGI_BIN_DIR ${PGI_HOME}/bin
 ENV PGI_LIB_DIR ${PGI_HOME}/lib
 ENV PGI_MAN_DIR ${PGI_HOME}/man
 
-RUN wget -O/tmp/pgilinux-2018-184-x86-64.tar.gz https://s3.amazonaws.com/gen-purpose/pgilinux-2018-184-x86-64.tar.gz
-ADD /tmp/pgilinux-2018-184-x86-64.tar.gz /tmp
+RUN wget -O/tmp/pgilinux-2018-184-x86-64.tar.gz https://s3.amazonaws.com/gen-purpose/pgilinux-2018-184-x86-64.tar.gz && \
+    cd /tmp && \
+    tar xvfz pgilinux-2018-184-x86-64.tar.gz 
 
 RUN export PGI_SILENT=true && \
     export PGI_ACCEPT_EULA=accept && \
