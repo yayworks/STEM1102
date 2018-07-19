@@ -34,11 +34,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Install PGI
 ENV PGI_VERSION 18.4
-ENV PGI_INSTALL_DIR /usr/local/pgi
+ENV PGI_INSTALL_DIR /opt/pgi
 ENV PGI_HOME    ${PGI_INSTALL_DIR}/linux86-64/${PGI_VERSION}
 ENV PGI_BIN_DIR ${PGI_HOME}/bin
 ENV PGI_LIB_DIR ${PGI_HOME}/lib
 ENV PGI_MAN_DIR ${PGI_HOME}/man
+ENV PGI_MPI_BIN ${PGI_HOME}/mpi/openmpi/bin
+ENV PGI_MPI_LIB ${PGI_HOME}/mpi/openmpi/lib
+ENV PGI_MPI_MAN ${PGI_HOME}/mpi/openmpi/man
 
 RUN wget -O/tmp/pgilinux-2018-184-x86-64.tar.gz https://s3.amazonaws.com/gen-purpose/pgilinux-2018-184-x86-64.tar.gz && \
     cd /tmp && \
@@ -57,9 +60,9 @@ RUN export PGI_SILENT=true && \
 
 RUN echo "${PGI_LIB_DIR}" >> /etc/ld.so.conf.d/pgi.conf
 
-ENV PATH            ${PGI_BIN_DIR}:${PATH}
-ENV LD_LIBRARY_PATH ${PGI_LIB_DIR}:${LD_LIBRARY_PATH}
-ENV MANPATH         ${PGI_MAN_DIR}:${MANPATH}
+ENV PATH            ${PGI_BIN_DIR}:${PGI_MPI_BIN}:${PATH}
+ENV LD_LIBRARY_PATH ${PGI_LIB_DIR}:${PGI_MPI_LIB}:${LD_LIBRARY_PATH}
+ENV MANPATH         ${PGI_MAN_DIR}:${PGI_MPI_MAN}:${MANPATH}
 
 # nvidia-docker 1.0
 LABEL com.nvidia.volumes.needed="nvidia_driver"
