@@ -148,6 +148,7 @@ RUN echo " " | sudo apt-add-repository ppa:octave/stable && \
     
 RUN sudo apt-get update && \
     sudo apt-get install -y scilab && \
+    sudo ln -s /usr/local/anaconda3/bin/pip /usr/bin/pip && \
     sudo /usr/local/anaconda3/bin/pip install msgpack && \
     sudo /usr/local/anaconda3/bin/pip install scilab_kernel
     
