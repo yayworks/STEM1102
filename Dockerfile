@@ -1,6 +1,10 @@
 FROM nvidia/cuda:9.1-cudnn7-devel-ubuntu16.04
 LABEL maintainer "Raj Panda <raj@yayworks.com>"
 
+# Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
+ARG SERIAL_NUMBER
+ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180725.1811}
+
 # Install requirements (gcc & g++)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     software-properties-common python-software-properties \
@@ -31,6 +35,21 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     apt-get install -y npm && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+ARG GIT_BRANCH
+ENV GIT_BRANCH ${GIT_BRANCH:-master}
+
+RUN apt-get -y update && \
+    apt-get -y install curl && \
+    curl -H 'Cache-Control: no-cache' \
+        https://raw.githubusercontent.com/nimbix/image-common/master/install-nimbix.sh \
+        | bash -s -- --setup-nimbix-desktop --image-common-branch $GIT_BRANCH
+
+# Install CUDA samples
+RUN apt-get -y install cuda-samples-9-1 && apt-get clean
+
+# Fix VirtualGL for sudo
+RUN chmod u+s /usr/lib/libdlfaker.so /usr/lib/libvglfaker.so
 
 # Install PGI
 ENV PGI_VERSION 18.4
@@ -77,27 +96,7 @@ ENV LD_LIBRARY_PATH /usr/local/nvidia/lib:/usr/local/nvidia/lib64:${LD_LIBRARY_P
 ENV NVIDIA_VISIBLE_DEVICES all
 ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
 
-# Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
-ARG SERIAL_NUMBER
-ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180725.1548}
-
-ARG GIT_BRANCH
-ENV GIT_BRANCH ${GIT_BRANCH:-master}
-
-RUN apt-get -y update && \
-    apt-get -y install curl && \
-    curl -H 'Cache-Control: no-cache' \
-        https://raw.githubusercontent.com/nimbix/image-common/master/install-nimbix.sh \
-        | bash -s -- --setup-nimbix-desktop --image-common-branch $GIT_BRANCH
-
-# Install CUDA samples
-RUN apt-get -y install cuda-samples-9-1 && apt-get clean
-
-# Fix VirtualGL for sudo
-RUN chmod u+s /usr/lib/libdlfaker.so /usr/lib/libvglfaker.so
-
-
-
+## Install YayBench stuff
 RUN wget -O- -q http://s3tools.org/repo/deb-all/stable/s3tools.key | apt-key add - 
 RUN wget -O/etc/apt/sources.list.d/s3tools.list http://s3tools.org/repo/deb-all/stable/s3tools.list 
 RUN apt-get update 
