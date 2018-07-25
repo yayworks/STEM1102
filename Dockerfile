@@ -78,17 +78,17 @@ ENV NVIDIA_VISIBLE_DEVICES all
 ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
-ARG SERIAL_NUMBER
-ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180719.1316}
+#ARG SERIAL_NUMBER
+#ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180719.1316}
 
-ARG GIT_BRANCH
-ENV GIT_BRANCH ${GIT_BRANCH:-master}
+#ARG GIT_BRANCH
+#ENV GIT_BRANCH ${GIT_BRANCH:-master}
 
-RUN apt-get -y update && \
-    apt-get -y install curl && \
-    curl -H 'Cache-Control: no-cache' \
-        https://raw.githubusercontent.com/nimbix/image-common/master/install-nimbix.sh \
-        | bash -s -- --setup-nimbix-desktop --image-common-branch $GIT_BRANCH
+#RUN apt-get -y update && \
+#    apt-get -y install curl && \
+#    curl -H 'Cache-Control: no-cache' \
+#        https://raw.githubusercontent.com/nimbix/image-common/master/install-nimbix.sh \
+#        | bash -s -- --setup-nimbix-desktop --image-common-branch $GIT_BRANCH
 
 # Install CUDA samples
 RUN apt-get -y install cuda-samples-9-1 && apt-get clean
@@ -148,7 +148,7 @@ RUN echo " " | sudo apt-add-repository ppa:octave/stable && \
     
 RUN sudo apt-get update && \
     sudo apt-get install -y scilab && \
-    sudo ln -s /usr/local/anaconda3/bin/pip /usr/bin/pip && \
+#    sudo ln -s /usr/local/anaconda3/bin/pip /usr/bin/pip && \
     sudo /usr/local/anaconda3/bin/pip install msgpack && \
     sudo /usr/local/anaconda3/bin/pip install scilab_kernel
     
