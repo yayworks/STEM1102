@@ -1,9 +1,28 @@
 FROM nvidia/cuda:9.1-cudnn7-devel-ubuntu16.04
-LABEL maintainer "Raj Panda <raj@yayworks.com>"
+LABEL maintainer="Nimbix, Inc."
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
 ARG SERIAL_NUMBER
-ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180725.1811}
+ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180725.1900}
+
+ARG GIT_BRANCH
+ENV GIT_BRANCH ${GIT_BRANCH:-master}
+
+RUN apt-get -y update && \
+    apt-get -y install curl && \
+    curl -H 'Cache-Control: no-cache' \
+        https://raw.githubusercontent.com/nimbix/image-common/master/install-nimbix.sh \
+        | bash -s -- --setup-nimbix-desktop --image-common-branch $GIT_BRANCH
+
+# Install CUDA samples
+RUN apt-get -y install cuda-samples-9-1 && apt-get clean
+
+# Fix VirtualGL for sudo
+RUN chmod u+s /usr/lib/libdlfaker.so /usr/lib/libvglfaker.so
+
+# Metadata
+COPY NAE/AppDef.json /etc/NAE/AppDef.json
+RUN curl --fail -X POST -d @/etc/NAE/AppDef.json https://api.jarvice.com/jarvice/validate
 
 # Install requirements (gcc & g++)
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -35,21 +54,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     apt-get install -y npm && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-
-ARG GIT_BRANCH
-ENV GIT_BRANCH ${GIT_BRANCH:-master}
-
-RUN apt-get -y update && \
-    apt-get -y install curl && \
-    curl -H 'Cache-Control: no-cache' \
-        https://raw.githubusercontent.com/nimbix/image-common/master/install-nimbix.sh \
-        | bash -s -- --setup-nimbix-desktop --image-common-branch $GIT_BRANCH
-
-# Install CUDA samples
-RUN apt-get -y install cuda-samples-9-1 && apt-get clean
-
-# Fix VirtualGL for sudo
-RUN chmod u+s /usr/lib/libdlfaker.so /usr/lib/libvglfaker.so
 
 # Install PGI
 ENV PGI_VERSION 18.4
@@ -163,8 +167,8 @@ ADD ./scripts /usr/local/scripts
 # Add PushToCompute Work Flow Metadata
 ADD ./NAE/nvidia.cfg /etc/NAE/nvidia.cfg
 # Metadata
-COPY NAE/AppDef.json /etc/NAE/AppDef.json
-RUN curl --fail -X POST -d @/etc/NAE/AppDef.json https://api.jarvice.com/jarvice/validate
+#COPY NAE/AppDef.json /etc/NAE/AppDef.json
+#RUN curl --fail -X POST -d @/etc/NAE/AppDef.json https://api.jarvice.com/jarvice/validate
 
 ADD ./NAE/screenshot.png /etc/NAE/screenshot.png
 ADD ./Wallpaper-yaybench_1280x720.png /opt/images/Wallpaper.png
