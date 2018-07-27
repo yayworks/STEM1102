@@ -106,10 +106,10 @@ RUN wget -O/etc/apt/sources.list.d/s3tools.list http://s3tools.org/repo/deb-all/
 RUN apt-get update 
 RUN apt-get install -y s3cmd 
 
-#ENV MPI_VERSION 2.0.1
-#ADD ./install-ompi.sh /tmp/install-ompi.sh
-#RUN /bin/bash -x /tmp/install-ompi.sh && \
-#    rm -rf /tmp/install-ompi.sh
+ENV MPI_VERSION 3.1.1
+ADD ./install-ompi.sh /tmp/install-ompi.sh
+RUN /bin/bash -x /tmp/install-ompi.sh && \
+    rm -rf /tmp/install-ompi.sh
 
 #ENV OSU_VERSION 5.3.2
 #ADD ./install-osu.sh /tmp/install-osu.sh
@@ -189,24 +189,24 @@ RUN  chmod +x          /usr/local/install_cmake.sh
 RUN /bin/bash -x       /usr/local/install_cmake.sh
 #Add AMD AOCC Compilers
 
-WORKDIR /usr/local
-RUN sudo wget https://s3.amazonaws.com/gen-purpose/AOCC-1.2-Fortran-Prerequisites.tar.xz && \
-    sudo wget https://s3.amazonaws.com/gen-purpose/AOCC-1.2-FortranPlugin.tar.xz && \
-    sudo wget https://s3.amazonaws.com/gen-purpose/AOCC-1.2-Compiler.tar.xz && \
-    sudo tar xf AOCC-1.2-Compiler.tar.xz && \
-    sudo wget https://s3.amazonaws.com/gen-purpose/AMDuProf_Linux_x64_1.2.275.tar.gz && \
-    sudo tar xvfz AMDuProf_Linux_x64_1.2.275.tar.gz && \
-    sudo wget https://s3.amazonaws.com/gen-purpose/AMD-LIBM-Linux-3.2.1.tar.gz && \
-    sudo tar xvfz AMD-LIBM-Linux-3.2.1.tar.gz && \
-    sudo wget https://s3.amazonaws.com/gen-purpose/AMD-BLIS-Linux-0.95-Beta.tar.gz && \
-    sudo tar xvfz AMD-BLIS-Linux-0.95-Beta.tar.gz && \
-    sudo rm -rf /usr/local/*tar* && \
-    cd AOCC-1.2-Compiler && \
-    sudo ./install.sh && \
-    sudo ln -s /usr/local/AOCC-1.2-Compiler/AOCC-1.2-FortranPlugin/dragonegg.so /usr/lib/dragonegg.so && \
-    sudo ln -s /usr/local/amdlibm-3.2.1/lib/dynamic/libamdlibm.so /usr/lib/libamdlibm.so && \
-    sudo ln -s /usr/local/amd-blis-0.95-beta/lib/libblis.so /usr/lib/libblis.so && \
-    sudo cp -r /usr/local/amd-blis-0.95-beta/include/blis /usr/include 
+#WORKDIR /usr/local
+#RUN sudo wget https://s3.amazonaws.com/gen-purpose/AOCC-1.2-Fortran-Prerequisites.tar.xz && \
+#    sudo wget https://s3.amazonaws.com/gen-purpose/AOCC-1.2-FortranPlugin.tar.xz && \
+#    sudo wget https://s3.amazonaws.com/gen-purpose/AOCC-1.2-Compiler.tar.xz && \
+#    sudo tar xf AOCC-1.2-Compiler.tar.xz && \
+#    sudo wget https://s3.amazonaws.com/gen-purpose/AMDuProf_Linux_x64_1.2.275.tar.gz && \
+#    sudo tar xvfz AMDuProf_Linux_x64_1.2.275.tar.gz && \
+#    sudo wget https://s3.amazonaws.com/gen-purpose/AMD-LIBM-Linux-3.2.1.tar.gz && \
+#    sudo tar xvfz AMD-LIBM-Linux-3.2.1.tar.gz && \
+#    sudo wget https://s3.amazonaws.com/gen-purpose/AMD-BLIS-Linux-0.95-Beta.tar.gz && \
+#    sudo tar xvfz AMD-BLIS-Linux-0.95-Beta.tar.gz && \
+#    sudo rm -rf /usr/local/*tar* && \
+#    cd AOCC-1.2-Compiler && \
+#    sudo ./install.sh && \
+#    sudo ln -s /usr/local/AOCC-1.2-Compiler/AOCC-1.2-FortranPlugin/dragonegg.so /usr/lib/dragonegg.so && \
+#    sudo ln -s /usr/local/amdlibm-3.2.1/lib/dynamic/libamdlibm.so /usr/lib/libamdlibm.so && \
+#    sudo ln -s /usr/local/amd-blis-0.95-beta/lib/libblis.so /usr/lib/libblis.so && \
+#    sudo cp -r /usr/local/amd-blis-0.95-beta/include/blis /usr/include 
 
 RUN echo 'export PATH=/usr/local/cuda/bin:/usr/local/anaconda3/envs/tensorflow/bin:${PATH}' >> /home/nimbix/.bashrc \
 &&  echo 'export PYTHONPATH=/usr/local/anaconda3/envs/tensorflow/lib/python3.6:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/prettytensor-0.7.2-py3.6.egg:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/enum34-1.1.6-py3.6.egg:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/matplotlib:${PYTHONPATH}' >> /home/nimbix/.bashrc \
@@ -218,9 +218,9 @@ RUN echo 'export PATH=/usr/local/cuda/bin:/usr/local/anaconda3/envs/tensorflow/b
 &&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/mpi/openmpi/bin' >> /etc/skel/.bashrc \
 &&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/mpi/openmpi/lib' >> /etc/skel/.bashrc \
 &&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/mpi/openmpi/man' >> /etc/skel/.bashrc \
-&&  echo 'export PATH=$PATH:/usr/local/AMDuProf_Linux_x64_1.2.275/bin' >> /etc/skel/.bashrc \
-&&  echo 'export PATH=$PATH:/usr/local/AOCC-1.2-Compiler/bin' >> /etc/skel/.bashrc \
-&&  echo 'source /usr/local/setenv_AOCC.sh' >> /etc/skel/.bashrc \
+#&&  echo 'export PATH=$PATH:/usr/local/AMDuProf_Linux_x64_1.2.275/bin' >> /etc/skel/.bashrc \
+#&&  echo 'export PATH=$PATH:/usr/local/AOCC-1.2-Compiler/bin' >> /etc/skel/.bashrc \
+#&&  echo 'source /usr/local/setenv_AOCC.sh' >> /etc/skel/.bashrc \
 &&  echo 'export PYTHONPATH=/usr/local/anaconda3/envs/tensorflow/lib/python3.6:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/prettytensor-0.7.2-py3.6.egg:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/enum34-1.1.6-py3.6.egg:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/matplotlib:$PYTHONPATH' >> /etc/skel/.bashrc
    
 
