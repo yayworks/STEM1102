@@ -218,6 +218,8 @@ RUN echo 'export PATH=/usr/local/cuda/bin:/usr/local/anaconda3/envs/tensorflow/b
 &&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/mpi/openmpi/bin' >> /etc/skel/.bashrc \
 &&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/mpi/openmpi/lib' >> /etc/skel/.bashrc \
 &&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/mpi/openmpi/man' >> /etc/skel/.bashrc \
+&&  echo 'export PATH=/usr/local/openmpi-3.1.1/bin:$PATH' >> /etc/skel/.bashrc \
+&&  echo 'export LD_LIBRARY_PATH=/usr/local/openmpi-3.1.1/lib:$LD_LIBRARY_PATH' >> /etc/skel/.bashrc \
 #&&  echo 'export PATH=$PATH:/usr/local/AMDuProf_Linux_x64_1.2.275/bin' >> /etc/skel/.bashrc \
 #&&  echo 'export PATH=$PATH:/usr/local/AOCC-1.2-Compiler/bin' >> /etc/skel/.bashrc \
 #&&  echo 'source /usr/local/setenv_AOCC.sh' >> /etc/skel/.bashrc \
