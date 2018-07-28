@@ -109,7 +109,7 @@ RUN apt-get install -y s3cmd
 ENV MPI_VERSION 3.1.1
 ADD ./install-ompi.sh /tmp/install-ompi.sh
 RUN chmod +x /tmp/install-ompi.sh && \
-    cd /tmp
+    cd /tmp && \
     /bin/bash -x ./install-ompi.sh
 
 #ENV OSU_VERSION 5.3.2
