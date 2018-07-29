@@ -7,8 +7,6 @@ cd openmpi-${MPI_VERSION} && \
     ./configure --with-cuda=/usr/local/cuda  --enable-mpi-cxx --prefix=/usr/local/openmpi-${MPI_VERSION} && \
     make -j4 && \
     make install
-cd ../ && \
-    rm -rf /tmp/openmpi-${MPI_VERSION}
 
 ##echo 'LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib' >> /etc/skel/.bashrc
 ##echo 'PATH=${PATH}:/usr/local/bin' >> /etc/skel/.bashrc
