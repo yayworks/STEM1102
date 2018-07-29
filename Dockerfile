@@ -107,9 +107,12 @@ RUN apt-get update
 RUN apt-get install -y s3cmd 
 
 ENV MPI_VERSION 3.1.1
-ADD ./install-ompi.sh /tmp/install-ompi.sh
-RUN chmod +x /tmp/install-ompi.sh && \
-    /bin/bash -x /tmp/install-ompi.sh
+RUN wget https://www.open-mpi.org/software/ompi/v3.1/downloads/openmpi-${MPI_VERSION}.tar.bz2 && \
+    tar xvf openmpi-${MPI_VERSION}.tar.bz2 && \
+    cd openmpi-${MPI_VERSION} && \
+    ./configure --with-cuda=/usr/local/cuda  --enable-mpi-cxx --prefix=/usr/local/openmpi-${MPI_VERSION} && \
+    make -j4 && \
+    make install
 
 #ENV OSU_VERSION 5.3.2
 #ADD ./install-osu.sh /tmp/install-osu.sh
