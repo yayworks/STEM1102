@@ -3,7 +3,7 @@ LABEL maintainer="Nimbix, Inc."
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
 ARG SERIAL_NUMBER
-ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180729.1246}
+ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180729.1545}
 
 ARG GIT_BRANCH
 ENV GIT_BRANCH ${GIT_BRANCH:-master}
@@ -56,36 +56,36 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     rm -rf /var/lib/apt/lists/*
 
 # Install PGI
-ENV PGI_VERSION 18.4
-ENV PGI_INSTALL_DIR /opt/pgi
-ENV PGI_HOME    ${PGI_INSTALL_DIR}/linux86-64/${PGI_VERSION}
-ENV PGI_BIN_DIR ${PGI_HOME}/bin
-ENV PGI_LIB_DIR ${PGI_HOME}/lib
-ENV PGI_MAN_DIR ${PGI_HOME}/man
-ENV PGI_MPI_BIN ${PGI_HOME}/mpi/openmpi/bin
-ENV PGI_MPI_LIB ${PGI_HOME}/mpi/openmpi/lib
-ENV PGI_MPI_MAN ${PGI_HOME}/mpi/openmpi/man
+#ENV PGI_VERSION 18.4
+#ENV PGI_INSTALL_DIR /opt/pgi
+#ENV PGI_HOME    ${PGI_INSTALL_DIR}/linux86-64/${PGI_VERSION}
+#ENV PGI_BIN_DIR ${PGI_HOME}/bin
+#ENV PGI_LIB_DIR ${PGI_HOME}/lib
+#ENV PGI_MAN_DIR ${PGI_HOME}/man
+#ENV PGI_MPI_BIN ${PGI_HOME}/mpi/openmpi/bin
+#ENV PGI_MPI_LIB ${PGI_HOME}/mpi/openmpi/lib
+#ENV PGI_MPI_MAN ${PGI_HOME}/mpi/openmpi/man
 
-RUN wget -O/tmp/pgilinux-2018-184-x86-64.tar.gz https://s3.amazonaws.com/gen-purpose/pgilinux-2018-184-x86-64.tar.gz && \
-    cd /tmp && \
-    tar xvfz pgilinux-2018-184-x86-64.tar.gz 
+#RUN wget -O/tmp/pgilinux-2018-184-x86-64.tar.gz https://s3.amazonaws.com/gen-purpose/pgilinux-2018-184-x86-64.tar.gz && \
+#    cd /tmp && \
+#    tar xvfz pgilinux-2018-184-x86-64.tar.gz 
 
-RUN export PGI_SILENT=true && \
-    export PGI_ACCEPT_EULA=accept && \
-    export PGI_INSTALL_NVIDIA=true && \
-    export PGI_INSTALL_MANAGED=true && \
-    export PGI_INSTALL_AMD=false && \
-    export PGI_INSTALL_JAVA=false && \
-    export PGI_INSTALL_MPI=true && \
-    export PGI_MPI_GPU_SUPPORT=true && \
-    /tmp/install && \
-    rm -rf /tmp/*
+#RUN export PGI_SILENT=true && \
+#    export PGI_ACCEPT_EULA=accept && \
+#    export PGI_INSTALL_NVIDIA=true && \
+#    export PGI_INSTALL_MANAGED=true && \
+#    export PGI_INSTALL_AMD=false && \
+#    export PGI_INSTALL_JAVA=false && \
+#    export PGI_INSTALL_MPI=true && \
+#    export PGI_MPI_GPU_SUPPORT=true && \
+#    /tmp/install && \
+#    rm -rf /tmp/*
 
-RUN echo "${PGI_LIB_DIR}" >> /etc/ld.so.conf.d/pgi.conf
+#RUN echo "${PGI_LIB_DIR}" >> /etc/ld.so.conf.d/pgi.conf
 
-ENV PATH            ${PGI_BIN_DIR}:${PGI_MPI_BIN}:${PATH}
-ENV LD_LIBRARY_PATH ${PGI_LIB_DIR}:${PGI_MPI_LIB}:${LD_LIBRARY_PATH}
-ENV MANPATH         ${PGI_MAN_DIR}:${PGI_MPI_MAN}:${MANPATH}
+#ENV PATH            ${PGI_BIN_DIR}:${PGI_MPI_BIN}:${PATH}
+#ENV LD_LIBRARY_PATH ${PGI_LIB_DIR}:${PGI_MPI_LIB}:${LD_LIBRARY_PATH}
+#ENV MANPATH         ${PGI_MAN_DIR}:${PGI_MPI_MAN}:${MANPATH}
 
 # nvidia-docker 1.0
 LABEL com.nvidia.volumes.needed="nvidia_driver"
@@ -215,12 +215,12 @@ RUN echo 'export PATH=/usr/local/cuda/bin:/usr/local/anaconda3/envs/tensorflow/b
 &&  echo 'export PYTHONPATH=/usr/local/anaconda3/envs/tensorflow/lib/python3.6:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/prettytensor-0.7.2-py3.6.egg:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/enum34-1.1.6-py3.6.egg:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/matplotlib:${PYTHONPATH}' >> /home/nimbix/.bashrc \
 &&  echo 'export PATH=/usr/local/cuda/bin:/usr/local/anaconda3/envs/tensorflow/bin:$PATH' >> /etc/skel/.bashrc \
 &&  echo 'export PATH=/opt/cmake/bin:$PATH' >> /etc/skel/.bashrc \
-&&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/bin' >> /etc/skel/.bashrc \
-&&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/lib' >> /etc/skel/.bashrc \
-&&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/man' >> /etc/skel/.bashrc \
-&&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/mpi/openmpi/bin' >> /etc/skel/.bashrc \
-&&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/mpi/openmpi/lib' >> /etc/skel/.bashrc \
-&&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/mpi/openmpi/man' >> /etc/skel/.bashrc \
+#&&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/bin' >> /etc/skel/.bashrc \
+#&&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/lib' >> /etc/skel/.bashrc \
+#&&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/man' >> /etc/skel/.bashrc \
+#&&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/mpi/openmpi/bin' >> /etc/skel/.bashrc \
+#&&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/mpi/openmpi/lib' >> /etc/skel/.bashrc \
+#&&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/mpi/openmpi/man' >> /etc/skel/.bashrc \
 &&  echo 'export PATH=/usr/local/openmpi-3.1.1/bin:$PATH' >> /etc/skel/.bashrc \
 &&  echo 'export LD_LIBRARY_PATH=/usr/local/openmpi-3.1.1/lib:$LD_LIBRARY_PATH' >> /etc/skel/.bashrc \
 #&&  echo 'export PATH=$PATH:/usr/local/AMDuProf_Linux_x64_1.2.275/bin' >> /etc/skel/.bashrc \
