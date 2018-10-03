@@ -3,7 +3,7 @@ LABEL maintainer="Nimbix, Inc."
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
 ARG SERIAL_NUMBER
-ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180729.1545}
+ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20181003.1600}
 
 ARG GIT_BRANCH
 ENV GIT_BRANCH ${GIT_BRANCH:-master}
@@ -55,37 +55,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Install PGI
-#ENV PGI_VERSION 18.4
-#ENV PGI_INSTALL_DIR /opt/pgi
-#ENV PGI_HOME    ${PGI_INSTALL_DIR}/linux86-64/${PGI_VERSION}
-#ENV PGI_BIN_DIR ${PGI_HOME}/bin
-#ENV PGI_LIB_DIR ${PGI_HOME}/lib
-#ENV PGI_MAN_DIR ${PGI_HOME}/man
-#ENV PGI_MPI_BIN ${PGI_HOME}/mpi/openmpi/bin
-#ENV PGI_MPI_LIB ${PGI_HOME}/mpi/openmpi/lib
-#ENV PGI_MPI_MAN ${PGI_HOME}/mpi/openmpi/man
-
-#RUN wget -O/tmp/pgilinux-2018-184-x86-64.tar.gz https://s3.amazonaws.com/gen-purpose/pgilinux-2018-184-x86-64.tar.gz && \
-#    cd /tmp && \
-#    tar xvfz pgilinux-2018-184-x86-64.tar.gz 
-
-#RUN export PGI_SILENT=true && \
-#    export PGI_ACCEPT_EULA=accept && \
-#    export PGI_INSTALL_NVIDIA=true && \
-#    export PGI_INSTALL_MANAGED=true && \
-#    export PGI_INSTALL_AMD=false && \
-#    export PGI_INSTALL_JAVA=false && \
-#    export PGI_INSTALL_MPI=true && \
-#    export PGI_MPI_GPU_SUPPORT=true && \
-#    /tmp/install && \
-#    rm -rf /tmp/*
-
-#RUN echo "${PGI_LIB_DIR}" >> /etc/ld.so.conf.d/pgi.conf
-
-#ENV PATH            ${PGI_BIN_DIR}:${PGI_MPI_BIN}:${PATH}
-#ENV LD_LIBRARY_PATH ${PGI_LIB_DIR}:${PGI_MPI_LIB}:${LD_LIBRARY_PATH}
-#ENV MANPATH         ${PGI_MAN_DIR}:${PGI_MPI_MAN}:${MANPATH}
 
 # nvidia-docker 1.0
 LABEL com.nvidia.volumes.needed="nvidia_driver"
@@ -106,13 +75,13 @@ RUN wget -O/etc/apt/sources.list.d/s3tools.list http://s3tools.org/repo/deb-all/
 RUN apt-get update 
 RUN apt-get install -y s3cmd 
 
-ENV MPI_VERSION 3.1.1
-RUN wget https://www.open-mpi.org/software/ompi/v3.1/downloads/openmpi-${MPI_VERSION}.tar.bz2 && \
-    tar xvf openmpi-${MPI_VERSION}.tar.bz2 && \
-    cd openmpi-${MPI_VERSION} && \
-    ./configure --with-cuda=/usr/local/cuda  --enable-mpi-cxx --prefix=/usr/local/openmpi-${MPI_VERSION} && \
-    make -j4 && \
-    make install
+#ENV MPI_VERSION 3.1.1
+#RUN wget https://www.open-mpi.org/software/ompi/v3.1/downloads/openmpi-${MPI_VERSION}.tar.bz2 && \
+#    tar xvf openmpi-${MPI_VERSION}.tar.bz2 && \
+#    cd openmpi-${MPI_VERSION} && \
+#    ./configure --with-cuda=/usr/local/cuda  --enable-mpi-cxx --prefix=/usr/local/openmpi-${MPI_VERSION} && \
+#    make -j4 && \
+#    make install
 
 #ENV OSU_VERSION 5.3.2
 #ADD ./install-osu.sh /tmp/install-osu.sh
@@ -140,11 +109,15 @@ RUN chmod +x /usr/local/config.sh && chown nimbix.nimbix /usr/local/config.sh &&
 RUN sudo apt-get install -y r-base && \
     sudo apt-get install -y r-base-dev && \
     sudo apt-get install -y gdebi-core 
-RUN /usr/bin/wget https://download2.rstudio.org/rstudio-server-1.1.442-amd64.deb && \
-    echo "y" |sudo gdebi rstudio-server-1.1.442-amd64.deb && \
-    echo "auth-minimum-user-id=500" >> /etc/rstudio/rserver.conf && \
-    echo "Y" | /usr/local/anaconda3/bin/conda install -c r r-irkernel && \
-    rm rstudio-server-1.1.442-amd64.deb 
+#RUN /usr/bin/wget https://download2.rstudio.org/rstudio-server-1.1.442-amd64.deb && \
+#    echo "y" |sudo gdebi rstudio-server-1.1.442-amd64.deb && \
+#    echo "auth-minimum-user-id=500" >> /etc/rstudio/rserver.conf && \
+#    echo "Y" | /usr/local/anaconda3/bin/conda install -c r r-irkernel && \
+#    rm rstudio-server-1.1.442-amd64.deb 
+RUN /usr/bin/wget https://download1.rstudio.org/rstudio-xenial-1.1.456-amd64.deb && \
+    sudo dpkg -i rstudio-xenial-1.1.456-amd64.deb && \
+    sudo apt-get -y -f install && \
+    rm rstudio-xenial-1.1.456-amd64.deb
 
 RUN echo " " | sudo apt-add-repository ppa:octave/stable && \
     sudo apt-get update && \
@@ -152,11 +125,17 @@ RUN echo " " | sudo apt-add-repository ppa:octave/stable && \
     sudo apt-get build-dep -y octave && \
     echo "Y" | /usr/local/anaconda3/bin/conda install -c conda-forge octave_kernel
     
-RUN sudo apt-get update && \
-    sudo apt-get install -y scilab && \
-#    sudo ln -s /usr/local/anaconda3/bin/pip /usr/bin/pip && \
-    sudo /usr/local/anaconda3/bin/pip install msgpack && \
-    sudo /usr/local/anaconda3/bin/pip install scilab_kernel
+#RUN sudo apt-get update && \
+#    sudo apt-get install -y scilab && \
+###    sudo ln -s /usr/local/anaconda3/bin/pip /usr/bin/pip && \
+#    sudo /usr/local/anaconda3/bin/pip install msgpack && \
+#    sudo /usr/local/anaconda3/bin/pip install scilab_kernel
+
+RUN  sudo apt-get -y install software-properties-common && \
+     sudo add-apt-repository ppa:fenics-packages/fenics && \
+     sudo apt-get update && \
+     sudo apt-get -y install --no-install-recommends fenics && \
+     sudo apt-get -y install paraview
     
 RUN sudo /usr/local/anaconda3/bin/pip install jupyter_c_kernel && \
     sudo /usr/local/anaconda3/bin/install_c_kernel
