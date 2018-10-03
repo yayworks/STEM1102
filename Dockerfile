@@ -3,7 +3,7 @@ LABEL maintainer="Nimbix, Inc."
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
 ARG SERIAL_NUMBER
-ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20181003.1600}
+ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20181003.1715}
 
 ARG GIT_BRANCH
 ENV GIT_BRANCH ${GIT_BRANCH:-master}
@@ -115,8 +115,8 @@ RUN sudo apt-get install -y r-base && \
 #    echo "Y" | /usr/local/anaconda3/bin/conda install -c r r-irkernel && \
 #    rm rstudio-server-1.1.442-amd64.deb 
 RUN /usr/bin/wget https://download1.rstudio.org/rstudio-xenial-1.1.456-amd64.deb && \
+    sudo apt-get -y install libjpeg62 && \
     sudo dpkg -i rstudio-xenial-1.1.456-amd64.deb && \
-    sudo apt-get -y -f install && \
     rm rstudio-xenial-1.1.456-amd64.deb
 
 RUN echo " " | sudo apt-add-repository ppa:octave/stable && \
@@ -131,8 +131,8 @@ RUN echo " " | sudo apt-add-repository ppa:octave/stable && \
 #    sudo /usr/local/anaconda3/bin/pip install msgpack && \
 #    sudo /usr/local/anaconda3/bin/pip install scilab_kernel
 
-RUN  sudo apt-get -y install software-properties-common && \
-     sudo add-apt-repository ppa:fenics-packages/fenics && \
+
+RUN  echo " " | sudo add-apt-repository ppa:fenics-packages/fenics && \
      sudo apt-get update && \
      sudo apt-get -y install --no-install-recommends fenics && \
      sudo apt-get -y install paraview
