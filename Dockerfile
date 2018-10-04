@@ -140,7 +140,14 @@ RUN echo " " | sudo apt-add-repository ppa:octave/stable && \
 RUN sudo /usr/local/anaconda3/bin/pip install jupyter_c_kernel && \
     sudo /usr/local/anaconda3/bin/install_c_kernel
     
-RUN /usr/local/anaconda3/bin/conda create -n fenicsproject -c conda-forge python=3.6 fenics mshr ipython
+RUN /usr/local/anaconda3/bin/conda create -n fenicsproject -c conda-forge python=3.6 fenics mshr ipython && \
+    sudo apt-get -y install paraview
+
+RUN wget -O/tmp http://gmsh.info//bin/Linux/gmsh-git-Linux64.tgz && \
+    sudo tar xvfz /tmp/gmsh-git-Linux64.tgz && \
+    sudo cp /tmp/gmsh-git-Linux64/bin/gmsh /usr/local/bin && \
+    sudo mkdir /usr/share/gmsh && \
+    sudo cp -r /tmp/gmsh-git-Linux64/share /usr/share/gmsh
 
 
 RUN mkdir -p /opt/images && \
@@ -172,7 +179,7 @@ ADD ./install_cmake.sh /usr/local/install_cmake.sh
 RUN  chmod +x          /usr/local/install_cmake.sh
 RUN /bin/bash -x       /usr/local/install_cmake.sh
 
-RUN echo 'export PATH=/usr/local/cuda/bin:/usr/local/anaconda3/envs/fenicsproject/bin:/usr/local/anaconda3/bin:$PATH' >> /etc/skel/.bashrc \
+RUN echo 'export PATH=/usr/local/bin:/usr/local/cuda/bin:/usr/local/anaconda3/envs/fenicsproject/bin:/usr/local/anaconda3/bin:$PATH' >> /etc/skel/.bashrc \
 &&  echo 'export PYTHONPATH=/usr/local/anaconda3/envs/fenicsproject/lib:/usr/local/anaconda3/envs/fenicsproject/lib/python3.6:/usr/local/anaconda3/envs/fenicsproject/lib/python3.6/site-packages/:/usr/local/anaconda3/envs/fenicsproject/lib/python3.6/site-packages/matplotlib:$PYTHONPATH' >> /etc/skel/.bashrc
 
 #RUN echo 'export PATH=/usr/local/cuda/bin:/usr/local/anaconda3/envs/tensorflow/bin:${PATH}' >> /home/nimbix/.bashrc \
