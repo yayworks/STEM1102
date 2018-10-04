@@ -3,7 +3,7 @@ LABEL maintainer="Nimbix, Inc."
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
 ARG SERIAL_NUMBER
-ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20181003.1715}
+ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20181003.2045}
 
 ARG GIT_BRANCH
 ENV GIT_BRANCH ${GIT_BRANCH:-master}
@@ -132,13 +132,15 @@ RUN echo " " | sudo apt-add-repository ppa:octave/stable && \
 #    sudo /usr/local/anaconda3/bin/pip install scilab_kernel
 
 
-RUN  echo " " | sudo add-apt-repository ppa:fenics-packages/fenics && \
-     sudo apt-get update && \
-     sudo apt-get -y install --no-install-recommends fenics && \
-     sudo apt-get -y install paraview
+#RUN  echo " " | sudo add-apt-repository ppa:fenics-packages/fenics && \
+#     sudo apt-get update && \
+#     sudo apt-get -y install --no-install-recommends fenics && \
+#     sudo apt-get -y install paraview
     
 RUN sudo /usr/local/anaconda3/bin/pip install jupyter_c_kernel && \
     sudo /usr/local/anaconda3/bin/install_c_kernel
+    
+RUN /usr/local/anaconda3/bin/conda create -n fenicsproject -c conda-forge python=3.6 fenics mshr ipython
 
 
 RUN mkdir -p /opt/images && \
@@ -169,43 +171,26 @@ CMD /usr/local/scripts/update_drivers.sh
 ADD ./install_cmake.sh /usr/local/install_cmake.sh
 RUN  chmod +x          /usr/local/install_cmake.sh
 RUN /bin/bash -x       /usr/local/install_cmake.sh
-#Add AMD AOCC Compilers
 
-#WORKDIR /usr/local
-#RUN sudo wget https://s3.amazonaws.com/gen-purpose/AOCC-1.2-Fortran-Prerequisites.tar.xz && \
-#    sudo wget https://s3.amazonaws.com/gen-purpose/AOCC-1.2-FortranPlugin.tar.xz && \
-#    sudo wget https://s3.amazonaws.com/gen-purpose/AOCC-1.2-Compiler.tar.xz && \
-#    sudo tar xf AOCC-1.2-Compiler.tar.xz && \
-#    sudo wget https://s3.amazonaws.com/gen-purpose/AMDuProf_Linux_x64_1.2.275.tar.gz && \
-#    sudo tar xvfz AMDuProf_Linux_x64_1.2.275.tar.gz && \
-#    sudo wget https://s3.amazonaws.com/gen-purpose/AMD-LIBM-Linux-3.2.1.tar.gz && \
-#    sudo tar xvfz AMD-LIBM-Linux-3.2.1.tar.gz && \
-#    sudo wget https://s3.amazonaws.com/gen-purpose/AMD-BLIS-Linux-0.95-Beta.tar.gz && \
-#    sudo tar xvfz AMD-BLIS-Linux-0.95-Beta.tar.gz && \
-#    sudo rm -rf /usr/local/*tar* && \
-#    cd AOCC-1.2-Compiler && \
-#    sudo ./install.sh && \
-#    sudo ln -s /usr/local/AOCC-1.2-Compiler/AOCC-1.2-FortranPlugin/dragonegg.so /usr/lib/dragonegg.so && \
-#    sudo ln -s /usr/local/amdlibm-3.2.1/lib/dynamic/libamdlibm.so /usr/lib/libamdlibm.so && \
-#    sudo ln -s /usr/local/amd-blis-0.95-beta/lib/libblis.so /usr/lib/libblis.so && \
-#    sudo cp -r /usr/local/amd-blis-0.95-beta/include/blis /usr/include 
+RUN echo 'export PATH=/usr/local/cuda/bin:/usr/local/anaconda3/envs/fenicsproject/bin:/usr/local/anaconda3/bin:$PATH' >> /etc/skel/.bashrc \
+&&  echo 'export PYTHONPATH=/usr/local/anaconda3/envs/fenicsproject/lib:/usr/local/anaconda3/envs/fenicsproject/lib/python3.6:/usr/local/anaconda3/envs/fenicsproject/lib/python3.6/site-packages/:/usr/local/anaconda3/envs/fenicsproject/lib/python3.6/site-packages/matplotlib:$PYTHONPATH' >> /etc/skel/.bashrc
 
-RUN echo 'export PATH=/usr/local/cuda/bin:/usr/local/anaconda3/envs/tensorflow/bin:${PATH}' >> /home/nimbix/.bashrc \
-&&  echo 'export PYTHONPATH=/usr/local/anaconda3/envs/tensorflow/lib/python3.6:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/prettytensor-0.7.2-py3.6.egg:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/enum34-1.1.6-py3.6.egg:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/matplotlib:${PYTHONPATH}' >> /home/nimbix/.bashrc \
-&&  echo 'export PATH=/usr/local/cuda/bin:/usr/local/anaconda3/envs/tensorflow/bin:$PATH' >> /etc/skel/.bashrc \
-&&  echo 'export PATH=/opt/cmake/bin:$PATH' >> /etc/skel/.bashrc \
+#RUN echo 'export PATH=/usr/local/cuda/bin:/usr/local/anaconda3/envs/tensorflow/bin:${PATH}' >> /home/nimbix/.bashrc \
+#&&  echo 'export PYTHONPATH=/usr/local/anaconda3/envs/tensorflow/lib/python3.6:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/prettytensor-0.7.2-py3.6.egg:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/enum34-1.1.6-py3.6.egg:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/matplotlib:${PYTHONPATH}' >> /home/nimbix/.bashrc \
+#&&  echo 'export PATH=/usr/local/cuda/bin:/usr/local/anaconda3/envs/tensorflow/bin:$PATH' >> /etc/skel/.bashrc \
+#&&  echo 'export PATH=/opt/cmake/bin:$PATH' >> /etc/skel/.bashrc \
 #&&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/bin' >> /etc/skel/.bashrc \
 #&&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/lib' >> /etc/skel/.bashrc \
 #&&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/man' >> /etc/skel/.bashrc \
 #&&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/mpi/openmpi/bin' >> /etc/skel/.bashrc \
 #&&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/mpi/openmpi/lib' >> /etc/skel/.bashrc \
 #&&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/mpi/openmpi/man' >> /etc/skel/.bashrc \
-&&  echo 'export PATH=/usr/local/openmpi-3.1.1/bin:$PATH' >> /etc/skel/.bashrc \
-&&  echo 'export LD_LIBRARY_PATH=/usr/local/openmpi-3.1.1/lib:$LD_LIBRARY_PATH' >> /etc/skel/.bashrc \
+#&&  echo 'export PATH=/usr/local/openmpi-3.1.1/bin:$PATH' >> /etc/skel/.bashrc \
+#&&  echo 'export LD_LIBRARY_PATH=/usr/local/openmpi-3.1.1/lib:$LD_LIBRARY_PATH' >> /etc/skel/.bashrc \
 #&&  echo 'export PATH=$PATH:/usr/local/AMDuProf_Linux_x64_1.2.275/bin' >> /etc/skel/.bashrc \
 #&&  echo 'export PATH=$PATH:/usr/local/AOCC-1.2-Compiler/bin' >> /etc/skel/.bashrc \
 #&&  echo 'source /usr/local/setenv_AOCC.sh' >> /etc/skel/.bashrc \
-&&  echo 'export PYTHONPATH=/usr/local/anaconda3/envs/tensorflow/lib/python3.6:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/prettytensor-0.7.2-py3.6.egg:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/enum34-1.1.6-py3.6.egg:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/matplotlib:$PYTHONPATH' >> /etc/skel/.bashrc
+#&&  echo 'export PYTHONPATH=/usr/local/anaconda3/envs/tensorflow/lib/python3.6:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/prettytensor-0.7.2-py3.6.egg:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/enum34-1.1.6-py3.6.egg:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/matplotlib:$PYTHONPATH' >> /etc/skel/.bashrc
    
 
 # Expose port 22 for local JARVICE emulation in docker
