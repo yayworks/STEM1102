@@ -3,7 +3,7 @@ LABEL maintainer="Nimbix, Inc."
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
 ARG SERIAL_NUMBER
-ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20181003.2045}
+ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20181004.0430}
 
 ARG GIT_BRANCH
 ENV GIT_BRANCH ${GIT_BRANCH:-master}
@@ -143,8 +143,9 @@ RUN sudo /usr/local/anaconda3/bin/pip install jupyter_c_kernel && \
 RUN /usr/local/anaconda3/bin/conda create -n fenicsproject -c conda-forge python=3.6 fenics mshr ipython && \
     sudo apt-get -y install paraview
 
-RUN wget -O/tmp http://gmsh.info//bin/Linux/gmsh-git-Linux64.tgz && \
-    sudo tar xvfz /tmp/gmsh-git-Linux64.tgz && \
+RUN wget -O/tmp/gmsh-git-Linux64.tgz http://gmsh.info//bin/Linux/gmsh-git-Linux64.tgz && \
+    cd /tmp && \
+    sudo tar xvfz gmsh-git-Linux64.tgz && \
     sudo cp /tmp/gmsh-git-Linux64/bin/gmsh /usr/local/bin && \
     sudo mkdir /usr/share/gmsh && \
     sudo cp -r /tmp/gmsh-git-Linux64/share /usr/share/gmsh
