@@ -2,19 +2,19 @@
 #!/bin/bash
 ####################################################################################################
 #                                                                                                  #
-# yb-sw-config.NIMBIX.x8664.turbotensor.sh - Software installs & configuration for Ubuntu TF Lab  #
+# yb-sw-config.NIMBIX.x8664.turbotensor.sh - Software installs & configuration for STEM Lab        #
 #                                                                                                  #
-# Copyright (C) 2017 Yayworks, Inc. - All Rights Reserved                                          #
+# Copyright (C) 2018 Yayworks, Inc. - All Rights Reserved                                          #
 #                                                                                                  #
-# Last revised 06/08/2018                                                                          #
+# Last revised 12/25/2018                                                                          #
 #                                                                                                  #
 ####################################################################################################
 
 
-wget https://repo.continuum.io/archive/Anaconda3-5.2.0-Linux-x86_64.sh
+wget https://repo.continuum.io/archive/Anaconda3-2018.12-Linux-x86_64.sh
 
 (
-sudo bash Anaconda3-5.2.0-Linux-x86_64.sh <<EOF
+sudo bash Anaconda3-2018.12-Linux-x86_64.sh <EOF
 
 yes
 /usr/local/anaconda3
