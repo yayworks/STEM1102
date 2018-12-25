@@ -3,7 +3,7 @@ LABEL maintainer="Nimbix, Inc."
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
 ARG SERIAL_NUMBER
-ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20181004.0430}
+ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20181225.1800}
 
 ARG GIT_BRANCH
 ENV GIT_BRANCH ${GIT_BRANCH:-master}
@@ -75,18 +75,6 @@ RUN wget -O/etc/apt/sources.list.d/s3tools.list http://s3tools.org/repo/deb-all/
 RUN apt-get update 
 RUN apt-get install -y s3cmd 
 
-#ENV MPI_VERSION 3.1.1
-#RUN wget https://www.open-mpi.org/software/ompi/v3.1/downloads/openmpi-${MPI_VERSION}.tar.bz2 && \
-#    tar xvf openmpi-${MPI_VERSION}.tar.bz2 && \
-#    cd openmpi-${MPI_VERSION} && \
-#    ./configure --with-cuda=/usr/local/cuda  --enable-mpi-cxx --prefix=/usr/local/openmpi-${MPI_VERSION} && \
-#    make -j4 && \
-#    make install
-
-#ENV OSU_VERSION 5.3.2
-#ADD ./install-osu.sh /tmp/install-osu.sh
-#RUN /bin/bash -x /tmp/install-osu.sh && rm -rf /tmp/install-osu.sh
-
 ADD ./yb-sw-config.NIMBIX.x8664.turbotensor.sh /tmp/yb-sw-config.NIMBIX.x8664.turbotensor.sh
 RUN /bin/bash -x /tmp/yb-sw-config.NIMBIX.x8664.turbotensor.sh 
 
@@ -109,11 +97,7 @@ RUN chmod +x /usr/local/config.sh && chown nimbix.nimbix /usr/local/config.sh &&
 RUN sudo apt-get install -y r-base && \
     sudo apt-get install -y r-base-dev && \
     sudo apt-get install -y gdebi-core 
-#RUN /usr/bin/wget https://download2.rstudio.org/rstudio-server-1.1.442-amd64.deb && \
-#    echo "y" |sudo gdebi rstudio-server-1.1.442-amd64.deb && \
-#    echo "auth-minimum-user-id=500" >> /etc/rstudio/rserver.conf && \
-#    echo "Y" | /usr/local/anaconda3/bin/conda install -c r r-irkernel && \
-#    rm rstudio-server-1.1.442-amd64.deb 
+
 RUN /usr/bin/wget https://download1.rstudio.org/rstudio-xenial-1.1.456-amd64.deb && \
     sudo apt-get -y install libjpeg62 && \
     sudo dpkg -i rstudio-xenial-1.1.456-amd64.deb && \
@@ -125,17 +109,9 @@ RUN echo " " | sudo apt-add-repository ppa:octave/stable && \
     sudo apt-get build-dep -y octave && \
     echo "Y" | /usr/local/anaconda3/bin/conda install -c conda-forge octave_kernel
     
-#RUN sudo apt-get update && \
-#    sudo apt-get install -y scilab && \
-###    sudo ln -s /usr/local/anaconda3/bin/pip /usr/bin/pip && \
-#    sudo /usr/local/anaconda3/bin/pip install msgpack && \
-#    sudo /usr/local/anaconda3/bin/pip install scilab_kernel
-
-
-#RUN  echo " " | sudo add-apt-repository ppa:fenics-packages/fenics && \
-#     sudo apt-get update && \
-#     sudo apt-get -y install --no-install-recommends fenics && \
-#     sudo apt-get -y install paraview
+RUN sudo apt-get install -y maxima && \
+    sudo apt-get update && \
+    sudo apt-get install -y wxmaxima
     
 RUN sudo /usr/local/anaconda3/bin/pip install jupyter_c_kernel && \
     sudo /usr/local/anaconda3/bin/install_c_kernel
@@ -158,10 +134,6 @@ ADD ./scripts /usr/local/scripts
 
 # Add PushToCompute Work Flow Metadata
 ADD ./NAE/nvidia.cfg /etc/NAE/nvidia.cfg
-# Metadata
-#COPY NAE/AppDef.json /etc/NAE/AppDef.json
-#RUN curl --fail -X POST -d @/etc/NAE/AppDef.json https://api.jarvice.com/jarvice/validate
-
 ADD ./NAE/screenshot.png /etc/NAE/screenshot.png
 ADD ./Wallpaper-yaybench_1280x720.png /opt/images/Wallpaper.png
 ADD ./yaymark_57x57.png /opt/icons/yaybench.png
@@ -171,11 +143,6 @@ ADD ./xfce4-panel.xml /etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-p
 CMD /usr/local/scripts/start.sh
 CMD /usr/local/scripts/update_drivers.sh
 
-#ADD ./install_comp.sh  /usr/local/install_comp.sh
-#ADD ./expect.sh        /usr/local/expect.sh
-#RUN  chmod +x          /usr/local/install_comp.sh
-#RUN  chmod +x          /usr/local/expect.sh
-#RUN /bin/bash -x       /usr/local/install_comp.sh
 ADD ./install_cmake.sh /usr/local/install_cmake.sh
 RUN  chmod +x          /usr/local/install_cmake.sh
 RUN /bin/bash -x       /usr/local/install_cmake.sh
@@ -183,23 +150,6 @@ RUN /bin/bash -x       /usr/local/install_cmake.sh
 RUN echo 'export PATH=/usr/local/bin:/usr/local/cuda/bin:/usr/local/anaconda3/envs/fenicsproject/bin:/usr/local/anaconda3/bin:$PATH' >> /etc/skel/.bashrc \
 &&  echo 'export PYTHONPATH=/usr/local/anaconda3/envs/fenicsproject/lib:/usr/local/anaconda3/envs/fenicsproject/lib/python3.6:/usr/local/anaconda3/envs/fenicsproject/lib/python3.6/site-packages/:/usr/local/anaconda3/envs/fenicsproject/lib/python3.6/site-packages/matplotlib:$PYTHONPATH' >> /etc/skel/.bashrc
 
-#RUN echo 'export PATH=/usr/local/cuda/bin:/usr/local/anaconda3/envs/tensorflow/bin:${PATH}' >> /home/nimbix/.bashrc \
-#&&  echo 'export PYTHONPATH=/usr/local/anaconda3/envs/tensorflow/lib/python3.6:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/prettytensor-0.7.2-py3.6.egg:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/enum34-1.1.6-py3.6.egg:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/matplotlib:${PYTHONPATH}' >> /home/nimbix/.bashrc \
-#&&  echo 'export PATH=/usr/local/cuda/bin:/usr/local/anaconda3/envs/tensorflow/bin:$PATH' >> /etc/skel/.bashrc \
-#&&  echo 'export PATH=/opt/cmake/bin:$PATH' >> /etc/skel/.bashrc \
-#&&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/bin' >> /etc/skel/.bashrc \
-#&&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/lib' >> /etc/skel/.bashrc \
-#&&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/man' >> /etc/skel/.bashrc \
-#&&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/mpi/openmpi/bin' >> /etc/skel/.bashrc \
-#&&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/mpi/openmpi/lib' >> /etc/skel/.bashrc \
-#&&  echo 'export PATH=$PATH:/opt/pgi/linux86-64/18.4/mpi/openmpi/man' >> /etc/skel/.bashrc \
-#&&  echo 'export PATH=/usr/local/openmpi-3.1.1/bin:$PATH' >> /etc/skel/.bashrc \
-#&&  echo 'export LD_LIBRARY_PATH=/usr/local/openmpi-3.1.1/lib:$LD_LIBRARY_PATH' >> /etc/skel/.bashrc \
-#&&  echo 'export PATH=$PATH:/usr/local/AMDuProf_Linux_x64_1.2.275/bin' >> /etc/skel/.bashrc \
-#&&  echo 'export PATH=$PATH:/usr/local/AOCC-1.2-Compiler/bin' >> /etc/skel/.bashrc \
-#&&  echo 'source /usr/local/setenv_AOCC.sh' >> /etc/skel/.bashrc \
-#&&  echo 'export PYTHONPATH=/usr/local/anaconda3/envs/tensorflow/lib/python3.6:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/prettytensor-0.7.2-py3.6.egg:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/enum34-1.1.6-py3.6.egg:/usr/local/anaconda3/envs/tensorflow/lib/python3.6/site-packages/matplotlib:$PYTHONPATH' >> /etc/skel/.bashrc
-   
 
 # Expose port 22 for local JARVICE emulation in docker
 EXPOSE 22
