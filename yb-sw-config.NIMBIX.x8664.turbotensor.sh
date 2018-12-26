@@ -14,7 +14,7 @@
 wget https://repo.continuum.io/archive/Anaconda3-2018.12-Linux-x86_64.sh
 
 (
-sudo bash Anaconda3-2018.12-Linux-x86_64.sh <EOF
+sudo bash Anaconda3-2018.12-Linux-x86_64.sh <<EOF
 
 yes
 /usr/local/anaconda3
