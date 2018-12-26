@@ -107,8 +107,8 @@ RUN echo " " | sudo apt-add-repository ppa:octave/stable && \
     sudo apt-get update && \
     sudo apt-get install -y octave && \
     sudo apt-get build-dep -y octave 
-RUN sudo /usr/local/anaconda3/bin/conda config --add channels conda-forge && \
-    echo "Y" | /usr/local/anaconda3/bin/conda install -c conda-forge octave_kernel
+##RUN sudo /usr/local/anaconda3/bin/conda config --add channels conda-forge && \
+##    echo "Y" | /usr/local/anaconda3/bin/conda install -c conda-forge octave_kernel
     
 RUN sudo apt-get install -y maxima && \
     sudo apt-get update && \
