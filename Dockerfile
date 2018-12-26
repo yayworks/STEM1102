@@ -3,7 +3,7 @@ LABEL maintainer="Nimbix, Inc."
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
 ARG SERIAL_NUMBER
-ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20181225.2215}
+ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20181226.1015}
 
 ARG GIT_BRANCH
 ENV GIT_BRANCH ${GIT_BRANCH:-master}
@@ -102,13 +102,17 @@ RUN /usr/bin/wget https://download1.rstudio.org/rstudio-xenial-1.1.456-amd64.deb
     sudo apt-get -y install libjpeg62 && \
     sudo dpkg -i rstudio-xenial-1.1.456-amd64.deb && \
     rm rstudio-xenial-1.1.456-amd64.deb
+    
+RUN cat /etc/apt/sources.list | grep deb-src && \
+    sudo sed -i~orig -e 's/# deb-src/deb-src/' /etc/apt/sources.list && \
+    sudo apt-get update
 
 RUN echo " " | sudo apt-add-repository ppa:octave/stable && \
     sudo apt-get update && \
     sudo apt-get install -y octave && \
-    sudo apt-get build-dep -y octave 
-##RUN sudo /usr/local/anaconda3/bin/conda config --add channels conda-forge && \
-##    echo "Y" | /usr/local/anaconda3/bin/conda install -c conda-forge octave_kernel
+    sudo apt-get build-dep -y octave && \
+    sudo /usr/local/anaconda3/bin/conda config --add channels conda-forge && \
+    echo "Y" | /usr/local/anaconda3/bin/conda install -c conda-forge octave_kernel
     
 RUN sudo apt-get install -y maxima && \
     sudo apt-get update && \
