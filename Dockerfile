@@ -3,7 +3,7 @@ LABEL maintainer="Nimbix, Inc."
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
 ARG SERIAL_NUMBER
-ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20181226.1120}
+ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20181226.1130}
 
 ARG GIT_BRANCH
 ENV GIT_BRANCH ${GIT_BRANCH:-master}
@@ -112,7 +112,7 @@ RUN echo " " | sudo apt-add-repository ppa:octave/stable && \
     sudo apt-get install -y octave && \
     sudo apt-get build-dep -y octave && \
     sudo /usr/local/anaconda3/bin/conda config --add channels conda-forge && \
-    echo "Y" | /usr/local/anaconda3/bin/conda install -c conda-forge octave_kernel
+    echo "Y" | sudo /usr/local/anaconda3/bin/conda install -c conda-forge octave_kernel
     
 RUN sudo apt-get install -y maxima && \
     sudo apt-get update && \
